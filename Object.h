@@ -16,13 +16,13 @@ protected:
     cv::Point3f orgin;//模型原点位置
     int id;//物体id
 
-    double rou_d;//diffusion
+    double rou_d = 0.5;//diffusion
 
     bool  transparent = false;
-    double refractR;//refraction rate折射率
-    double reflectR;//反射率
+    double refractR = 0;//refraction rate折射率
+    double reflectR = 0.5;//反射率
 
-    double r, g, b;//物体固有颜色
+    double r = 23, g = 123, b = 17;//物体固有颜色
 
 public:
     Object()
@@ -58,6 +58,19 @@ public:
     }
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
+};
+
+class Plane: public Object
+{
+private:
+    cv::Point3d N;
+    double D;//ax + by + cz + d = 0;
+
+public:
+    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;}
+    Hit RayCast(Ray ray);
+    bool Intersect(Ray ray);
+
 };
 
 

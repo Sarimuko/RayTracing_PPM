@@ -64,6 +64,7 @@ Hit Ball::RayCast(Ray ray)
 
     result.reflectCoefficience = reflectR;
     result.refractCoefficience = refractR;
+    result.deffuseR = rou_d;
 
     return result;
 
@@ -102,5 +103,42 @@ bool Ball::Intersect(Ray ray)
         }
     }
 
+    return true;
+}
+
+Hit Plane::RayCast(Ray ray)
+{
+    Hit result;
+    double t = - (D + N.ddot(ray.p0))/N.ddot(ray.pd);
+    if (t < 0)
+    {
+        result.valid = false;
+        return result;
+    }
+
+    result.valid = true;
+    result.P = ray.p0 + t * ray.pd;
+    result.N = regu(N);
+    result.Pd = ray.pd;
+    result.Rd = getReflect(result.Pd, result.N);
+
+    result.deffuseR = rou_d;
+    result.reflectCoefficience = reflectR;
+    result.refractCoefficience = refractR;
+
+    result.r = r;
+    result.g = g;
+    result.b = b;
+
+    return result;
+}
+
+bool Plane::Intersect(Ray ray)
+{
+    double t = - (D + N.ddot(ray.p0))/N.ddot(ray.pd);
+    if (t < 0)
+    {
+        return false;
+    }
     return true;
 }

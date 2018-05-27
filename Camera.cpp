@@ -17,9 +17,9 @@ cv::Mat Camera::CreatePhoto(Scene scene)
 
     cv::Point3f leftDown = photoCenter - CONST::w / 2 * yAxis - CONST::h / 2 * zAxis;
 
-    for (int i=0;i<CONST::w;i++)
+    for (int i=0;i<CONST::h;i++)
     {
-        for (int j=0;j<CONST::h;j++)
+        for (int j=0;j<CONST::w;j++)
         {
             Ray ray = ProduceRay(leftDown + i * yAxis + j * zAxis);
             cv::Vec3b color = RayTracing(ray, scene, 1);
@@ -46,7 +46,10 @@ Ray Camera::ProduceRay(cv::Point3d p)
 cv::Vec3b Camera::RayTracing(Ray ray, Scene scene, double coefficient)
 {
     cv::Vec3b color(0, 0, 0);
+    std::cout << "Ray Tracing"<<std::endl;
     Hit hit = scene.firstIntersect(ray);
+    std::cout << "Ray Tracing"<<std::endl;
+
     double inten = 0.0;
 
     std::vector<Hit> LightHits = scene.getLightRay(hit.P, hit.N);
@@ -56,16 +59,18 @@ cv::Vec3b Camera::RayTracing(Ray ray, Scene scene, double coefficient)
         inten += Phong(LightHits[i], hit.Pd, CONST::s);
     }
 
+    std::cout << inten << std::endl;
+
     color[0] += coefficient * hit.r * inten;
     color[1] += coefficient * hit.g * inten;
     color[2] += coefficient * hit.b * inten;
 
     double coeff_2 = coefficient * hit.reflectCoefficience;//只考虑反射
-    if (coeff_2 > 0.01)
+    /*if (coeff_2 > 0.01)
     {
         Ray rray(hit.P, hit.Rd);
         color += RayTracing(rray, scene, coeff_2);
-    }
+    }*/
 
     return color;
 }

@@ -31,6 +31,8 @@ Hit Scene::firstIntersect(Ray ray)
         }
     }
 
+    std::cout << "size of hits: "<<hits.size()<<std::endl;
+
     int hitSize = hits.size();
     double min_t = hits[0].t;
     Hit min_Hit = hits[0];
@@ -52,11 +54,13 @@ Hit Scene::firstIntersect(Ray ray)
 
 std::vector<Hit> Scene::getLightRay(cv::Point3d P, cv::Point3d N)
 {
+    std::cout << "getLightRay"<<std::endl;
     std::vector<Hit> ans;
     int size = lights.size();
     for (int i=0;i<size;i++)
     {
         Ray s(lights[i] -> position, P - lights[i] -> position);
+        std::cout << intersect(s)<<std::endl;
         if (!intersect(s))
         {
             Hit result;
