@@ -41,36 +41,42 @@ Ray Camera::ProduceRay(cv::Point3d p)
     ray.intensity = 1;
     ray.rayType = 0;//cameraRay
 
+    return ray;
+
 }
 
 cv::Vec3b Camera::RayTracing(Ray ray, Scene scene, double coefficient)
 {
     cv::Vec3b color(0, 0, 0);
-    std::cout << "Ray Tracing"<<std::endl;
+    //std::cout << "Ray Tracing"<<std::endl;
     Hit hit = scene.firstIntersect(ray);
-    std::cout << "Ray Tracing"<<std::endl;
+    //std::cout << "Ray Tracing"<<std::endl;
 
     double inten = 0.0;
 
     std::vector<Hit> LightHits = scene.getLightRay(hit.P, hit.N);
+    //std::cout << "size of lightHits: "<< LightHits.size()<<std::endl;
 
     for (int i=0;i<LightHits.size();i++)
     {
+        LightHits[i].deffuseR = hit.deffuseR;
+        LightHits[i].reflectCoefficience = hit.reflectCoefficience;
+        LightHits[i].refractCoefficience = hit.refractCoefficience;
         inten += Phong(LightHits[i], hit.Pd, CONST::s);
     }
-
     std::cout << inten << std::endl;
+    std::cout << "coefficience: "<<coefficient<<std::endl;
 
     color[0] += coefficient * hit.r * inten;
     color[1] += coefficient * hit.g * inten;
     color[2] += coefficient * hit.b * inten;
 
     double coeff_2 = coefficient * hit.reflectCoefficience;//只考虑反射
-    /*if (coeff_2 > 0.01)
+    if (coeff_2 > 0.1)
     {
         Ray rray(hit.P, hit.Rd);
         color += RayTracing(rray, scene, coeff_2);
-    }*/
+    }
 
     return color;
 }

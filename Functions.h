@@ -11,14 +11,22 @@
 
 static cv::Point3d regu(cv::Point3d o)
 {
-    cv::Point3d res;
+    cv::Point3d res = o;
     res = res/(norm(o));
+
+    //std::cout << "try to nomalization "<<o<<' '<<res<<std::endl;
+
+    return res;
 }
 
 static cv::Vec3d regu(cv::Vec3d o)
 {
-    cv::Vec3d res;
+    cv::Vec3d res = o;
     res = res/(norm(cv::Point3d(o)));
+
+    //std::cout << "try to nomalization "<<o<<' '<<res<<std::endl;
+
+    return res;
 }
 
 static cv::Point3d getReflect(cv::Point3d pd, cv::Point3d N)//得到反射光线
@@ -38,6 +46,7 @@ static double Phong(Hit hit, cv::Vec3d v_, double s)//返回Blinn-Phong模型的
     cv::Vec3d r = hit.Rd;
 
     double inten = hit.deffuseR + hit.reflectCoefficience * pow(norm(r.t() * v)/norm((n.t() * l)), s);
+    //std::cout << "pow" << l<< std::endl;
 
     return inten;
 

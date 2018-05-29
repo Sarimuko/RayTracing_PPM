@@ -6,6 +6,7 @@
 #define RAYTRACING_RAY_H
 
 #include <opencv2/opencv.hpp>
+#include "Functions.h"
 
 
 class Ray {
@@ -17,7 +18,10 @@ public:
 
     int rayType;//射线的种类
 
-    Ray(cv::Point3d p0_, cv::Point3d pd_, int rayType = 0, double inten_ = 1): p0(p0_), pd(pd_), rayType(rayType), intensity(inten_){}
+    Ray(cv::Point3d p0_, cv::Point3d pd_, int rayType = 0, double inten_ = 1): p0(p0_), pd(pd_), rayType(rayType), intensity(inten_)
+    {
+        pd = regu(pd);
+    }
     Ray(){}
 
 };

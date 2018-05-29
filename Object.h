@@ -16,6 +16,8 @@ protected:
     cv::Point3f orgin;//模型原点位置
     int id;//物体id
 
+    bool isBackground = false;
+
     double rou_d = 0.5;//diffusion
 
     bool  transparent = false;
@@ -67,7 +69,7 @@ private:
     double D;//ax + by + cz + d = 0;
 
 public:
-    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;}
+    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true;}
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
 

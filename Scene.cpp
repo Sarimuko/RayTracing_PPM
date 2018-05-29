@@ -10,7 +10,7 @@ bool Scene::intersect(Ray ray)
     int size = objectList.size();
     for (int i=0;i<size;i++)
     {
-        if (objectList[i]->Intersect(ray))
+        if (objectList[i]->Intersect(ray) && !objectList[i] -> isBackground)
             return true;
     }
     return false;
@@ -31,7 +31,7 @@ Hit Scene::firstIntersect(Ray ray)
         }
     }
 
-    std::cout << "size of hits: "<<hits.size()<<std::endl;
+    //std::cout << "size of hits: "<<hits.size()<<std::endl;
 
     int hitSize = hits.size();
     double min_t = hits[0].t;
@@ -46,6 +46,7 @@ Hit Scene::firstIntersect(Ray ray)
         }
     }
 
+
     //根据物体属性和计算击中点的其他信息
 
 
@@ -54,21 +55,26 @@ Hit Scene::firstIntersect(Ray ray)
 
 std::vector<Hit> Scene::getLightRay(cv::Point3d P, cv::Point3d N)
 {
-    std::cout << "getLightRay"<<std::endl;
+    //std::cout << "getLightRay"<<std::endl;
     std::vector<Hit> ans;
     int size = lights.size();
     for (int i=0;i<size;i++)
     {
         Ray s(lights[i] -> position, P - lights[i] -> position);
-        std::cout << intersect(s)<<std::endl;
-        if (!intersect(s))
+        Ray rs(P, lights[i] -> position - P);
+        //std::cout << "s: " << s.pd<<std::endl;
+        if (!intersect(rs))
         {
             Hit result;
             result.P = P;
             result.Pd = s.pd;
             result.N = N;
+            result.Rd = getReflect(result.Pd, result.N);
+
 
             result.RI = lights[i]->intensity;
+
+            //std::cout << "get light ray debug: "<< result.Rd << ' '<< result.Pd<<std::endl;
 
             result.valid = true;
 

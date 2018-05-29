@@ -22,7 +22,7 @@ int main() {
     Plane down(0, 0, 1, 0);
     Plane up(0, 0, 1, -100);
 
-    scene.addObject(&ball);
+    //scene.addObject(&ball);
     scene.addObject(&back);
     scene.addObject(&front);
     scene.addObject(&left);
@@ -31,7 +31,8 @@ int main() {
     scene.addObject(&up);
 
 
-    Light light(30, 30, 100, 1);
+
+    Light light(30, 30, 90, 1);
     scene.addLight(&light);
 
     cv::Mat photo = camera.CreatePhoto(scene);
