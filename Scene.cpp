@@ -46,6 +46,8 @@ Hit Scene::firstIntersect(Ray ray)
         }
     }
 
+    //std::cout << "min t: "<<min_t<<std::endl;
+
 
     //根据物体属性和计算击中点的其他信息
 
@@ -70,6 +72,7 @@ std::vector<Hit> Scene::getLightRay(cv::Point3d P, cv::Point3d N)
             result.Pd = s.pd;
             result.N = N;
             result.Rd = getReflect(result.Pd, result.N);
+            //result.Rd = -result.Rd;
 
 
             result.RI = lights[i]->intensity;

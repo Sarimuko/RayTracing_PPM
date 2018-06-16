@@ -18,9 +18,9 @@ private:
     double fD;//视平面距离
 
 public:
-    cv::Mat CreatePhoto(Scene scene);//to do
+    cv::Mat CreatePhoto(Scene& scene);//to do
     Ray ProduceRay(cv::Point3d p);//produce a ray from camera to point p
-    cv::Vec3b RayTracing(Ray ray, Scene scene, double coefficient);
+    cv::Vec3b RayTracing(Ray& ray, Scene& scene, double coefficient);
 
     Camera(double px, double py, double pz, double dx, double dy, double dz, double fd)
     {
@@ -33,6 +33,8 @@ public:
         direction.x = dx;
         direction.y = dy;
         direction.z = dz;
+
+        direction = regu(direction);
     }
 
 };

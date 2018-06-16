@@ -24,9 +24,10 @@ protected:
     double refractR = 0;//refraction rate折射率
     double reflectR = 0.5;//反射率
 
-    double r = 23, g = 123, b = 17;//物体固有颜色
+
 
 public:
+    double r = 23, g = 123, b = 17;//物体固有颜色
     Object()
     {
         id = -1;
@@ -69,7 +70,7 @@ private:
     double D;//ax + by + cz + d = 0;
 
 public:
-    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true;}
+    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true; N = regu(N);}
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
 

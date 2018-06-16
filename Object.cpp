@@ -116,11 +116,15 @@ Hit Plane::RayCast(Ray ray)
         return result;
     }
 
+    //std::cout << "t: "<<t <<std::endl;
+
     result.valid = true;
+    result.t = t;
     result.P = ray.p0 + t * ray.pd;
     result.N = regu(N);
     result.Pd = ray.pd;
     result.Rd = getReflect(result.Pd, result.N);
+    //result.Rd = -result.Rd;
 
     result.deffuseR = rou_d;
     result.reflectCoefficience = reflectR;

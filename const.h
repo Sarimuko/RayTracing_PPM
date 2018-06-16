@@ -11,6 +11,8 @@ namespace CONST
 
     static int w = 640;
     static int h = 480;
+
+    static int MAX_ITER = 1;
 }
 
 #endif //RAYTRACING_CONST_H
