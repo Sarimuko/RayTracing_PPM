@@ -54,7 +54,7 @@ Hit Ball::RayCast(Ray ray)
     result.P = ray.p0 + t * ray.pd;
     result.Pd = ray.pd;
     result.N = result.P - centre;
-    result.N = result.N / (norm(cv::Vec3d(result.N)));//单位化
+    result.N = regu(result.N);//单位化
 
     result.Rd = getReflect(ray.pd, result.N);
 
@@ -65,6 +65,8 @@ Hit Ball::RayCast(Ray ray)
     result.reflectCoefficience = reflectR;
     result.refractCoefficience = refractR;
     result.deffuseR = rou_d;
+
+    //std::cout << "ball intersect: "<<ray.p0 << ' '<<ray.pd<<' '<<result.P<<std::endl;
 
     return result;
 

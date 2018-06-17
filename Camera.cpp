@@ -14,22 +14,21 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
     cv::Point3f zAxis(0, 0, 1);
     cv::Point3f xAxis(direction);
     cv::Point3f yAxis = zAxis.cross(xAxis);
+    yAxis = regu(yAxis);
 
     cv::Point3f leftDown = photoCenter - CONST::w / 2 * yAxis - CONST::h / 2 * zAxis;
 
-    for (int iter = 0; iter < CONST::MAX_ITER;iter ++)
-    {
         for (int i=0;i<CONST::h;i++)
         {
             for (int j=0;j<CONST::w;j++)
             {
                 Ray ray = ProduceRay(leftDown + i * zAxis + j * yAxis);
-                cv::Vec3b color = RayTracing(ray, scene, 1);
+                cv::Vec3b color = RayTracing(ray, scene, 1, 0);
 
                 photo(CONST::h - 1 - i, CONST::w - 1 - j) += color;
             }
+            std::cout << "finished: "<<i<<std::endl;
         }
-    }
 
 
     return photo;
@@ -49,7 +48,7 @@ Ray Camera::ProduceRay(cv::Point3d p)
 
 }
 
-cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient)
+cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int iter)
 {
     cv::Vec3b color(0, 0, 0);
     //std::cout << "Ray Tracing"<<std::endl;
@@ -68,7 +67,7 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient)
             LightHits[i].deffuseR = hit.deffuseR;
             LightHits[i].reflectCoefficience = hit.reflectCoefficience;
             LightHits[i].refractCoefficience = hit.refractCoefficience;
-            inten += Phong(LightHits[i], hit.Pd, CONST::s);
+            inten += Phong(LightHits[i], ray.pd, CONST::s);
         }
     } else
     {
@@ -85,14 +84,24 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient)
     color[1] += coefficient * hit.g * inten;
     color[0] += coefficient * hit.b * inten;
 
-    double coeff_2 = coefficient * hit.reflectCoefficience;//只考虑反射
-    if (coeff_2 > 0.1)
+    double reflectf = coefficient * hit.reflectCoefficience;//只考虑反射
+    double refractf = coefficient * hit.refractCoefficience;//折射
+    if (iter < CONST::MAX_ITER)
     {
         Ray rray(hit.P, hit.Rd);
 #ifdef DEBUG
         std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
 #endif
-        color += RayTracing(rray, scene, coeff_2);
+        color += RayTracing(rray, scene, reflectf, iter + 1);
+    }
+
+    if (iter < CONST::MAX_ITER )
+    {
+        //Ray rray(hit.P, hit.Rd);
+#ifdef DEBUG
+        std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
+#endif
+        color += RayTracing(ray, scene, refractf, iter + 1);
     }
 
     return color;

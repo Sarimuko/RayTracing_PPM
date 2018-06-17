@@ -40,12 +40,12 @@ static cv::Point3d getReflect(cv::Point3d pd, cv::Point3d N)//得到反射光线
 
 static double Phong(Hit hit, cv::Vec3d v_, double s)//返回Blinn-Phong模型的光强
 {
-    cv::Vec3d l = hit.Pd;
-    cv::Vec3d v = v_;
-    cv::Vec3d n = hit.N;
-    cv::Vec3d r = hit.Rd;
+    cv::Vec3d l = regu(hit.Pd);
+    cv::Vec3d v = regu(v_);
+    cv::Vec3d n = regu(hit.N);
+    cv::Vec3d r = regu(hit.Rd);
 
-    double inten = hit.deffuseR + hit.reflectCoefficience * pow(norm(r.t() * v)/norm((n.t() * l)), s);
+    double inten = hit.deffuseR  * (cv::abs(n.ddot(l))) + hit.reflectCoefficience * pow(cv::abs(r.ddot(v)), s);
     //std::cout << "pow" << l<< std::endl;
 
     return inten;

@@ -12,21 +12,20 @@
 
 class Object {//物体基类
     friend class Scene;
-protected:
+
+public:
     cv::Point3f orgin;//模型原点位置
     int id;//物体id
 
     bool isBackground = false;
 
-    double rou_d = 0.5;//diffusion
+    double rou_d = 0.2;//diffusion
 
     bool  transparent = false;
     double refractR = 0;//refraction rate折射率
-    double reflectR = 0.5;//反射率
+    double reflectR = 0.4;//反射率
 
 
-
-public:
     double r = 23, g = 123, b = 17;//物体固有颜色
     Object()
     {
@@ -70,7 +69,7 @@ private:
     double D;//ax + by + cz + d = 0;
 
 public:
-    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true; N = regu(N);}
+    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true; N = regu(N); reflectR = 0.4;}
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
 

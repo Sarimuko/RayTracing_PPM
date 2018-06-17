@@ -15,4 +15,6 @@ Ray Light::getRay(cv::Point3d p)
 
     ray.intensity = intensity;
     ray.rayType = 1;//light
+
+    return ray;
 }

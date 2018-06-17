@@ -7,12 +7,12 @@
 
 namespace CONST
 {
-    static const double s = 0.5;
+    static const double s = 5;
 
-    static int w = 640;
-    static int h = 480;
+    static int w = 1280;
+    static int h = 960;
 
-    static int MAX_ITER = 1;
+    static int MAX_ITER = 3;
 }
 
 #endif //RAYTRACING_CONST_H

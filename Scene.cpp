@@ -64,13 +64,15 @@ std::vector<Hit> Scene::getLightRay(cv::Point3d P, cv::Point3d N)
     {
         Ray s(lights[i] -> position, P - lights[i] -> position);
         Ray rs(P, lights[i] -> position - P);
+        rs.p0 = rs.p0 + rs.pd * 0.00001;
         //std::cout << "s: " << s.pd<<std::endl;
-        if (!intersect(rs))
+        Hit min_hit = firstIntersect(rs);
+        if (min_hit.t != 0 &&  min_hit.t > cv::norm(lights[i] -> position - P))
         {
             Hit result;
             result.P = P;
             result.Pd = s.pd;
-            result.N = N;
+            result.N = regu(N);
             result.Rd = getReflect(result.Pd, result.N);
             //result.Rd = -result.Rd;
 
