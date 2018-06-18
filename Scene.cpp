@@ -10,7 +10,7 @@ bool Scene::intersect(Ray ray)
     int size = objectList.size();
     for (int i=0;i<size;i++)
     {
-        if (objectList[i]->Intersect(ray) && !objectList[i] -> isBackground)
+        if (objectList[i]->Intersect(ray))
             return true;
     }
     return false;
