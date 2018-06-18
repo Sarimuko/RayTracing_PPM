@@ -20,6 +20,8 @@ struct Hit//储存相交点的信息
     double refractCoefficience;//相交表面的折射系数
     double deffuseR;//漫反射系数
 
+    double n0, n1;//击中交界面两侧的折射率
+
     double t;//t of ray
 
     bool valid = false;

@@ -71,7 +71,7 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int ite
         }
     } else
     {
-        inten = hit.deffuseR;
+        inten = 0;//hit.deffuseR;
     }
 
 
@@ -88,7 +88,7 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int ite
     double refractf = coefficient * hit.refractCoefficience;//折射
     if (iter < CONST::MAX_ITER)
     {
-        Ray rray(hit.P, hit.Rd);
+        Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
 #ifdef DEBUG
         std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
 #endif
@@ -98,10 +98,12 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int ite
     if (iter < CONST::MAX_ITER )
     {
         //Ray rray(hit.P, hit.Rd);
+        cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
+        Ray refraR(hit.P + refraD * 0.0001, refraD);
 #ifdef DEBUG
         std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
 #endif
-        color += RayTracing(ray, scene, refractf, iter + 1);
+        color += RayTracing(refraR, scene, refractf, iter + 1);
     }
 
     return color;

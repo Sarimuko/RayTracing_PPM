@@ -7,6 +7,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <math.h>
+//#include "Ray.h"
 #include "Hit.h"
 
 static cv::Point3d regu(cv::Point3d o)
@@ -45,7 +46,7 @@ static double Phong(Hit hit, cv::Vec3d v_, double s)//返回Blinn-Phong模型的
     cv::Vec3d n = regu(hit.N);
     cv::Vec3d r = regu(hit.Rd);
 
-    double inten = hit.deffuseR  * (cv::abs(n.ddot(l))) + hit.reflectCoefficience * pow(cv::abs(r.ddot(v)), s);
+    double inten = hit.deffuseR  * abs(n.ddot(l)) + hit.reflectCoefficience * pow(std::max<double>(-r.ddot(v), 0), s);
     //std::cout << "pow" << l<< std::endl;
 
     return inten;
@@ -63,6 +64,23 @@ static double Blinn_Phong(Hit hit, cv::Vec3d v_, double s)//光线的hit信息�
     double inten = hit.deffuseR + hit.reflectCoefficience * pow(norm(n.t() * h)/norm((n.t() * l)), s);
 
     return inten;
+}
+
+static cv::Point3d getRefract(cv::Point3d origin, double n0, double n1, cv::Point3d N)
+{
+    double sin0 = cv::norm(origin.cross(N));
+    double sin1 = sin0 * n0 / n1;
+
+    cv::Point3d z = origin.cross(N);
+    cv::Point3d i = z.cross(N);
+    cv::Point3d rN = regu(origin + i * sin0);
+
+
+
+    cv::Point3d rd = rN - i * sin1/(sqrt(1 - sin1 * sin1));
+    rd = regu(rd);
+
+    return rd;
 }
 
 

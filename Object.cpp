@@ -62,6 +62,15 @@ Hit Ball::RayCast(Ray ray)
     result.g = g;
     result.b = b;
 
+    if(inBall)
+    {
+        result.n0 = n;
+        result.n1 = 1;
+    } else
+    {
+        result.n0 = 1;
+        result.n1 = n;
+    }
     result.reflectCoefficience = reflectR;
     result.refractCoefficience = refractR;
     result.deffuseR = rou_d;

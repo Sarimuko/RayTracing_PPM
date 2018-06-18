@@ -21,7 +21,8 @@ public:
 
     double rou_d = 0.2;//diffusion
 
-    bool  transparent = false;
+    //bool  transparent = false;
+    double n = 1.5;//光线的 折射率
     double refractR = 0;//refraction rate折射率
     double reflectR = 0.4;//反射率
 
