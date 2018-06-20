@@ -26,12 +26,21 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
                 Ray ray = ProduceRay(leftDown + i * zAxis + j * yAxis);
                 ray.rayType = 1;//视线光线
 
-                cv::Vec3b color = scene.RayTracing(ray, 1, 0, i, j);
+                scene.RayTracing(ray, 1, 0, i, j);
 
                 //photo(CONST::h - 1 - i, CONST::w - 1 - j) += color;
             }
             std::cout << "finished: "<<i<<std::endl;
         }
+
+    scene.shootPhoton(100000, *(scene.lights[0]));
+
+    int hitsize = scene.hits.size();
+    for (int i=0;i < hitsize;i++)
+    {
+        photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py) += scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color);
+    }
+    //std::cout << "visual point"<<scene.hits.size() << std::endl;
 
 
     return photo;

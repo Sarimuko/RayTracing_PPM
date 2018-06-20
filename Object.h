@@ -19,7 +19,7 @@ public:
 
     bool isBackground = false;
 
-    double rou_d = 0.2;//diffusion
+    double rou_d = 0.6;//diffusion
 
     //bool  transparent = false;
     double n = 1.5;//光线的 折射率
@@ -70,7 +70,7 @@ private:
     double D;//ax + by + cz + d = 0;
 
 public:
-    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true; N = regu(N); reflectR = 0.3; rou_d = 0.6; }
+    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; D = d;isBackground = true; N = regu(N); reflectR = 0; rou_d = 0.6; }
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
 

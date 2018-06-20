@@ -36,4 +36,6 @@ Ray Light::randomRay()
     ray.intensity = intensity;
 
     ray.rayType = 2;//光子光线
+
+    return ray;
 }
