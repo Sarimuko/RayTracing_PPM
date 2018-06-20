@@ -36,6 +36,43 @@ void Kd_tree::create(Node** root, std::vector<Hit> data, int begin, int end, int
 
     std::cout << begin<< ' '<<mid <<' ' <<end<<std::endl;
 
+    while (mid < end && ((cv::Vec3d)data[mid].P)[split] == ((cv::Vec3d)data[mid + 1].P)[split])
+    {
+        mid += 1;
+    }
+
     create(&((*root) -> l), data, begin, mid, (split + 1) % 3);
-    create(&((*root) -> r), data, mid, end, (split + 1) % 3);
+    create(&((*root) -> r), data, mid + 1, end, (split + 1) % 3);
 }
+
+std::vector<Hit> Kd_tree::findRange( Node *root, Hit target, double range)
+{
+    std::vector<Hit> ans;
+    if(root == NULL)
+        return ans;
+    double dist_sq, dx;
+    //int ret, added_res = 0;
+    dist_sq = 0;
+    dist_sq = dist(root -> data.P, target.P);    //计算搜索路径中每个节点和target的距离
+
+    if(dist_sq <= range) {//将范围内的近邻添加到结果向量res_nearest中
+        //std::pair<_Examplar,double> temp(root->getDomElt(), dist_sq);
+        ans.push_back(root -> data);
+        //结果个数+1
+        //added_res = 1;
+    }
+
+    dx = ((cv::Vec3d)(target.P))[root->split] - ((cv::Vec3d)root->data.P)[root->split];
+    //左子树或右子树递归的查找
+    std::vector<Hit> ret;
+    ret = findRange(dx <= 0.0 ? root->l : root->r, target, range);
+    //当另外一边可能存在范围内的近邻
+    if(ret >= 0 && fabs(dx) < range) {
+        ans.insert(ans.end(), ret.begin(), ret.end());
+        ret = findRange(dx <= 0.0 ? root-> r : root-> l, target, range);
+    }
+
+    ans.insert(ans.end(), ret.begin(), ret.end());
+    return ans;        //最终返回范围内的近邻集合
+}
+

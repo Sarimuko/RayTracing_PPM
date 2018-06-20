@@ -33,6 +33,7 @@ public:
 
     //void insert(Node* node);
     void create(Node** root, std::vector<Hit> data, int begin, int end, int split);//建立
+    std::vector<Hit> findRange(Node* root, Hit target, double range);
     //void addPhoton(Node* root, Hit target, double range);//添加光子
 };
 

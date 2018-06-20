@@ -103,6 +103,7 @@ void Scene::shootPhoton(int num, Light light)
     for (int i=0;i < num;i++)
     {
         Ray ray = light.randomRay();
+        Ntotal ++;
         //std::cout << ray.rayType<<std::endl;
         RayTracing(ray, 1, 0, 0, 0);
 
@@ -168,7 +169,7 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
                     color[1] += hits[i].g * inten;
                     color[0] += hits[i].b * inten;
 
-                    std::cout << hits[i].px<<": "<<hits[i].py<<std::endl;
+                    //std::cout << hits[i].px<<": "<<hits[i].py<<std::endl;
                     hits[i].color += color;
 
                 }
