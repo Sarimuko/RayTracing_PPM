@@ -34,6 +34,8 @@ struct Hit//储存相交点的信息
     bool valid = false;
 
     double r, g, b;
+
+    cv::Point3d color;//累积的颜色
 };
 
 

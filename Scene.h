@@ -27,7 +27,7 @@ public:
     Object* getObject(int id);//获得一个id为id的物体，如果找不到，返回NULL
     void shootPhoton(int num, Light light);//发射光子
 
-    cv::Vec3b RayTracing(Ray& ray, double coefficient, int iter);
+    cv::Vec3b RayTracing(Ray& ray, double coefficient, int iter, int x, int y);
 
     void addLight(Light* light){lights.push_back(light);}
     Light* getLight(int id);//获得id为id的光源

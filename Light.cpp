@@ -34,4 +34,6 @@ Ray Light::randomRay()
     ray.pd.z = cos(theta);
 
     ray.intensity = intensity;
+
+    ray.rayType = 2;//光子光线
 }

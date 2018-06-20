@@ -20,7 +20,6 @@ private:
 public:
     cv::Mat CreatePhoto(Scene& scene);//to do
     Ray ProduceRay(cv::Point3d p);//produce a ray from camera to point p
-    //cv::Vec3b RayTracing(Ray& ray, Scene& scene, double coefficient, int iter);
 
     Camera(double px, double py, double pz, double dx, double dy, double dz, double fd)
     {

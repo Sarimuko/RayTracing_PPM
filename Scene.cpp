@@ -47,12 +47,6 @@ Hit Scene::firstIntersect(Ray ray)
         }
     }
 
-    //std::cout << "min t: "<<min_t<<std::endl;
-
-
-    //根据物体属性和计算击中点的其他信息
-
-
     return min_Hit;
 }
 
@@ -75,13 +69,8 @@ std::vector<Hit> Scene::getLightRay(cv::Point3d P, cv::Point3d N)
             result.Pd = s.pd;
             result.N = regu(N);
             result.Rd = getReflect(result.Pd, result.N);
-            //result.Rd = -result.Rd;
-
 
             result.RI = lights[i]->intensity;
-
-            //std::cout << "get light ray debug: "<< result.Rd << ' '<< result.Pd<<std::endl;
-
             result.valid = true;
 
             ans.push_back(result);
@@ -120,65 +109,78 @@ void Scene::shootPhoton(int num, Light light)
 }
 
 
-cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter)
+cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y)
 {
     cv::Vec3b color(0, 0, 0);
-    //std::cout << "Ray Tracing"<<std::endl;
     Hit hit = firstIntersect(ray);
-    //std::cout << "Ray Tracing"<<std::endl;
 
-    double inten = 0.0;
 
-    std::vector<Hit> LightHits = getLightRay(hit.P, hit.N);
-    //std::cout << "size of lightHits: "<< LightHits.size()<<std::endl;
-
-    if (!LightHits.empty())
+    if (ray.rayType == 1)//如果是视线光线交点，那么加入到视线交点列表中
     {
-        for (int i=0;i<LightHits.size();i++)
+        hit.RI = coefficient;//加上权重信息
+        hit.px = x;
+        hit.py = y;
+
+        addHit(hit);
+
+        double reflectf = coefficient * hit.reflectCoefficience;//只考虑反射
+        double refractf = coefficient * hit.refractCoefficience;//折射
+        if (iter < CONST::MAX_ITER && reflectf > 0.00001)
         {
-            LightHits[i].deffuseR = hit.deffuseR;
-            LightHits[i].reflectCoefficience = hit.reflectCoefficience;
-            LightHits[i].refractCoefficience = hit.refractCoefficience;
-            inten += Phong(LightHits[i], ray.pd, CONST::s);
+            Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
+            RayTracing(rray, reflectf, iter + 1, x, y);
         }
-    } else
+
+        if (iter < CONST::MAX_ITER && refractf > 0.00001 )
+        {
+            cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
+            Ray refraR(hit.P + refraD * 0.0001, refraD);
+
+            RayTracing(refraR, refractf, iter + 1, x, y);
+        }
+
+    }//如果是视线光线，加入场景的hits列表，并递归追踪
+    else if (ray.rayType == 2)//如果是光子光线
     {
-        inten = 0;//hit.deffuseR;
-    }
+        double rate = rand() / (double)RAND_MAX;
+        if (rate < hit.deffuseR)
+        {
+            //留下来找邻近的Hit
+            int hitsize = hits.size();
+            for (int i=0;i<hitsize;i++)
+            {
+                if (dist(hits[i].P, hit.P) < hits[i].radius)
+                {
+                    hits[i].cnt++;//增加一个计数
 
+                    cv::Vec3b color(0, 0, 0);
+                    double inten = 0.0;
+                    inten += Phong(hit, hits[i].Pd, CONST::s);
 
-#ifdef DEBUG
-    std::cout << inten << std::endl;
-    std::cout << "coefficience: "<<coefficient<<std::endl;
-#endif
+                    color[2] += hits[i].r * inten;
+                    color[1] += hits[i].g * inten;
+                    color[0] += hits[i].b * inten;
 
-    color[2] += coefficient * hit.r * inten;
-    color[1] += coefficient * hit.g * inten;
-    color[0] += coefficient * hit.b * inten;
+                    hits[i].color += (cv::Point3d)color;
 
-    hit.RI = coefficient;//加上权重信息
-    addHit(hit);//加入场景的hits列表
-
-    double reflectf = coefficient * hit.reflectCoefficience;//只考虑反射
-    double refractf = coefficient * hit.refractCoefficience;//折射
-    if (iter < CONST::MAX_ITER && reflectf > 0.00001)
-    {
-        Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
-#ifdef DEBUG
-        std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
-#endif
-        color += RayTracing(rray, reflectf, iter + 1);
-    }
-
-    if (iter < CONST::MAX_ITER && refractf > 0.00001 )
-    {
-        //Ray rray(hit.P, hit.Rd);
-        cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
-        Ray refraR(hit.P + refraD * 0.0001, refraD);
-#ifdef DEBUG
-        std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
-#endif
-        color += RayTracing(refraR, refractf, iter + 1);
+                }
+            }
+        }
+        else if (rate - hit.deffuseR < hit.reflectCoefficience)
+        {
+            Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
+            //color += RayTracing(rray, reflectf, iter + 1, x, y);
+            RayTracing(rray, 1, iter + 1, x, y);
+        }
+        else if (rate - hit.deffuseR - hit.reflectCoefficience < hit.refractCoefficience)
+        {
+            //折射
+            cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
+            Ray refraR(hit.P + refraD * 0.0001, refraD);
+            
+            RayTracing(refraR, 1, iter + 1, x, y);
+        }
+        //否则吸收。。？
     }
 
     return color;
