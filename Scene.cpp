@@ -3,6 +3,7 @@
 //
 
 #include "Scene.h"
+#include "const.h"
 #include <limits.h>
 
 bool Scene::intersect(Ray ray)
@@ -106,4 +107,79 @@ Object* Scene::getObject(int id)
         if (objectList[i] -> id == id)
             return objectList[i];
     }
+}
+
+void Scene::shootPhoton(int num, Light light)
+{
+    for (int i=0;i < num;i++)
+    {
+        Ray ray = light.randomRay();
+
+    }
+
+}
+
+
+cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter)
+{
+    cv::Vec3b color(0, 0, 0);
+    //std::cout << "Ray Tracing"<<std::endl;
+    Hit hit = firstIntersect(ray);
+    //std::cout << "Ray Tracing"<<std::endl;
+
+    double inten = 0.0;
+
+    std::vector<Hit> LightHits = getLightRay(hit.P, hit.N);
+    //std::cout << "size of lightHits: "<< LightHits.size()<<std::endl;
+
+    if (!LightHits.empty())
+    {
+        for (int i=0;i<LightHits.size();i++)
+        {
+            LightHits[i].deffuseR = hit.deffuseR;
+            LightHits[i].reflectCoefficience = hit.reflectCoefficience;
+            LightHits[i].refractCoefficience = hit.refractCoefficience;
+            inten += Phong(LightHits[i], ray.pd, CONST::s);
+        }
+    } else
+    {
+        inten = 0;//hit.deffuseR;
+    }
+
+
+#ifdef DEBUG
+    std::cout << inten << std::endl;
+    std::cout << "coefficience: "<<coefficient<<std::endl;
+#endif
+
+    color[2] += coefficient * hit.r * inten;
+    color[1] += coefficient * hit.g * inten;
+    color[0] += coefficient * hit.b * inten;
+
+    hit.RI = coefficient;//加上权重信息
+    addHit(hit);//加入场景的hits列表
+
+    double reflectf = coefficient * hit.reflectCoefficience;//只考虑反射
+    double refractf = coefficient * hit.refractCoefficience;//折射
+    if (iter < CONST::MAX_ITER && reflectf > 0.00001)
+    {
+        Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
+#ifdef DEBUG
+        std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
+#endif
+        color += RayTracing(rray, reflectf, iter + 1);
+    }
+
+    if (iter < CONST::MAX_ITER && refractf > 0.00001 )
+    {
+        //Ray rray(hit.P, hit.Rd);
+        cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
+        Ray refraR(hit.P + refraD * 0.0001, refraD);
+#ifdef DEBUG
+        std::cout << "rray: "<<hit.P << ' '<<hit.Rd<<std::endl;
+#endif
+        color += RayTracing(refraR, refractf, iter + 1);
+    }
+
+    return color;
 }

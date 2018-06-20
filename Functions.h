@@ -84,4 +84,27 @@ static cv::Point3d getRefract(cv::Point3d origin, double n0, double n1, cv::Poin
 }
 
 
+static bool cmp0(Hit a, Hit b)
+{
+    return a.P.x < b.P.x;
+}
+
+static bool cmp1(Hit a, Hit b)
+{
+    return a.P.y < b.P.y;
+}
+
+static bool cmp2(Hit a, Hit b)
+{
+    return a.P.z < b.P.z;
+}
+
+static double dist(cv::Point3d a, cv::Point3d b)
+{
+    return cv::norm(a - b);
+}
+
+
+
+
 #endif //RAYTRACING_FUNCTIONS_H

@@ -26,6 +26,8 @@ public:
 
         intensity = inten;
     }
+
+    Ray randomRay();
 };
 
 

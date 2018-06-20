@@ -10,12 +10,15 @@
       <sourceFolder url="file://$MODULE_DIR$/Hit.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Ray.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Scene.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DataType.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Scene.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Kd_tree.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Camera.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Light.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/const.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Kd_tree.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Camera.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />

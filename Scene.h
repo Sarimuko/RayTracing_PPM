@@ -11,13 +11,23 @@
 
 
 class Scene {
+
+    friend class Camera;
 private:
     std::vector<Object*> objectList;//物体列表
     std::vector<Light*> lights;//光源列表
 
+    std::vector<Hit> hits;//目光击中点列表，现在就直接枚举好了
+
+    int Ntotal = 0;//发射的总光子数
+
 public:
     void addObject(Object* object){objectList.push_back(object);}//加入一个物体
+    void addHit(Hit hit){hits.push_back(hit);  Ntotal += 1;}
     Object* getObject(int id);//获得一个id为id的物体，如果找不到，返回NULL
+    void shootPhoton(int num, Light light);//发射光子
+
+    cv::Vec3b RayTracing(Ray& ray, double coefficient, int iter);
 
     void addLight(Light* light){lights.push_back(light);}
     Light* getLight(int id);//获得id为id的光源

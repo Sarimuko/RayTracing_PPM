@@ -6,6 +6,7 @@
 #include "Functions.h"
 #include "Scene.h"
 #include "const.h"
+#include <math.h>
 
 cv::Mat Camera::CreatePhoto(Scene& scene)
 {
@@ -23,9 +24,9 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
             for (int j=0;j<CONST::w;j++)
             {
                 Ray ray = ProduceRay(leftDown + i * zAxis + j * yAxis);
-                cv::Vec3b color = RayTracing(ray, scene, 1, 0);
+                cv::Vec3b color = scene.RayTracing(ray, 1, 0);
 
-                photo(CONST::h - 1 - i, CONST::w - 1 - j) += color;
+                //photo(CONST::h - 1 - i, CONST::w - 1 - j) += color;
             }
             std::cout << "finished: "<<i<<std::endl;
         }
@@ -48,7 +49,7 @@ Ray Camera::ProduceRay(cv::Point3d p)
 
 }
 
-cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int iter)
+/*cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int iter)
 {
     cv::Vec3b color(0, 0, 0);
     //std::cout << "Ray Tracing"<<std::endl;
@@ -84,9 +85,12 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int ite
     color[1] += coefficient * hit.g * inten;
     color[0] += coefficient * hit.b * inten;
 
+    hit.RI = coefficient;//加上权重信息
+    scene.addHit(hit);//加入场景的hits列表
+
     double reflectf = coefficient * hit.reflectCoefficience;//只考虑反射
     double refractf = coefficient * hit.refractCoefficience;//折射
-    if (iter < CONST::MAX_ITER)
+    if (iter < CONST::MAX_ITER && reflectf > 0.00001)
     {
         Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
 #ifdef DEBUG
@@ -95,7 +99,7 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int ite
         color += RayTracing(rray, scene, reflectf, iter + 1);
     }
 
-    if (iter < CONST::MAX_ITER )
+    if (iter < CONST::MAX_ITER && refractf > 0.00001 )
     {
         //Ray rray(hit.P, hit.Rd);
         cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
@@ -107,4 +111,5 @@ cv::Vec3b Camera::RayTracing(Ray& ray, Scene& scene, double coefficient, int ite
     }
 
     return color;
-}
+}*/
+
