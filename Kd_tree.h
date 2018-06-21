@@ -16,7 +16,7 @@ struct Node
     //cv::Point3d P;//分割点的坐标，x,y,z
     bool isLeaf;
 
-    Hit* data;//只保留指针，这样还可以枚举修改。。？
+    Hit data;
 
     int split;//分割维数， 0/1/2
     Node* l = NULL, *r = NULL;
@@ -32,8 +32,10 @@ public:
 
 
     //void insert(Node* node);
+    void create(std::vector<Hit> data);
     void create(Node** root, std::vector<Hit> data, int begin, int end, int split);//建立
-    std::vector<Hit*> findRange(Node* root, Hit target, double range);
+    std::vector<Hit> findRange(Node* root, Hit target, double range);
+    std::vector<Hit> findRange(Hit target, double range);
     //void addPhoton(Node* root, Hit target, double range);//添加光子
 };
 

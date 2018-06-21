@@ -19,12 +19,12 @@ public:
 
     bool isBackground = false;
 
-    double rou_d = 0.6;//diffusion
+    double rou_d = 0;//diffusion
 
     //bool  transparent = false;
     double n = 1.5;//光线的 折射率
     double refractR = 0;//refraction rate折射率
-    double reflectR = 0.4;//反射率
+    double reflectR = 1.0;//反射率
 
 
     double r = 23, g = 123, b = 17;//物体固有颜色

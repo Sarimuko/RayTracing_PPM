@@ -8,6 +8,7 @@
 #include <vector>
 #include "Object.h"
 #include "Light.h"
+#include "Kd_tree.h"
 
 
 class Scene {
@@ -18,8 +19,11 @@ private:
     std::vector<Light*> lights;//光源列表
 
     std::vector<Hit> hits;//目光击中点列表，现在就直接枚举好了
+    std::vector<Hit> photonHits;//光子击中的信息列表
 
     int Ntotal = 0;//发射的总光子数
+
+    Kd_tree tree;
 
 public:
     void addObject(Object* object){objectList.push_back(object);}//加入一个物体
@@ -37,6 +41,8 @@ public:
 
     std::vector<Hit> getLightRay(cv::Point3d P, cv::Point3d N);//得到和光线的交点信息
     void updateHit();
+
+    void processPhotons();
 };
 
 

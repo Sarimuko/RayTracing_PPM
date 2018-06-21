@@ -12,10 +12,10 @@ namespace CONST
     static const double s = 5;
     static const double a = 0.5;
 
-    static int w = 1280;
-    static int h = 960;
+    static int w = 640;
+    static int h = 480;
 
-    static int MAX_ITER = 1;
+    static int MAX_ITER = 0;
 
     static double pi = 3.1415926;
 }

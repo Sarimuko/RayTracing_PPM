@@ -12,7 +12,7 @@
 int main() {
     //std::cout << "Hello, World!" << std::endl;
 
-    Camera camera(19999, 5000, 5000, -1, 0, 0, 1000);
+    Camera camera(19999, 5000, 5000, -1, 0, 0, 500);
     Scene scene;
 
     Ball ball(500, 5000, 1500, 1000, 0);
@@ -81,7 +81,7 @@ int main() {
 
     std::vector<Hit>hits;
     hits.push_back(hit1);
-    hits.push_back(hit2);
+    hits.push_back(hit2);*/
 
     //DataType data1(3,5,1);
     //DataType data2(5,1,5);
@@ -93,7 +93,14 @@ int main() {
     Node* root = NULL;*/
     /*Node* root = NULL;
 
-    test.create(&root, hits, 0, 2, 0);*/
+    Hit target;
+    target.P.x = 0;
+    target.P.y = 0;
+    target.P.z = 0;
+
+    test.create(&root, hits, 0, 2, 0);
+    std::vector<Hit*> ans = test.findRange(root, target, 6);
+    std::cout << ans.size()<<std::endl;*/
 
     return 0;
 }

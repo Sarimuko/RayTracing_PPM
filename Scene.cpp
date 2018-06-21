@@ -112,6 +112,8 @@ void Scene::shootPhoton(int num, Light light)
 
     }
 
+    processPhotons();
+
 }
 
 
@@ -148,15 +150,18 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
     }//如果是视线光线，加入场景的hits列表，并递归追踪
     else if (ray.rayType == 2)//如果是光子光线
     {
-        /*double rate = rand() / (double)RAND_MAX;
-        if (rate < hit.deffuseR)
-            {*/
-            //std::cout << "deffuse"<<std::endl;
-            //留下来找邻近的Hit
             int hitsize = hits.size();
-            for (int i=0;i<hitsize;i++)
+
+            double rate = rand() / (double)RAND_MAX;
+            if (rate < hit.deffuseR)
             {
-                if (dist(hits[i].P, hit.P) < hits[i].radius)
+                photonHits.push_back(hit);
+            }
+
+            //在view point列表中寻找接近的
+            /*for (int i=0;i<hitsize;i++)
+            {
+                if (dist(hits[i].P, hit.P) < hits[i].radius && rate < hits[i].deffuseR)//留在漫反射
                 {
                     hits[i].cnt++;//增加一个计数
 
@@ -173,23 +178,8 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
                     hits[i].color += color;
 
                 }
-            }
-        /*}
-        else if (rate - hit.deffuseR < hit.reflectCoefficience && iter < CONST::MAX_ITER)
-        {
-            Ray rray(hit.P + hit.Rd * 0.0001, hit.Rd);
-            //color += RayTracing(rray, reflectf, iter + 1, x, y);
-            RayTracing(rray, 1, iter + 1, x, y);
-        }
-        else if (rate - hit.deffuseR - hit.reflectCoefficience < hit.refractCoefficience && iter < CONST::MAX_ITER)
-        {
-            //折射
-            cv::Point3d refraD = getRefract(hit.Pd, hit.n0, hit.n1, hit.N);
-            Ray refraR(hit.P + refraD * 0.0001, refraD);
+            }*/
 
-            RayTracing(refraR, 1, iter + 1, x, y);
-        }*/
-        //否则吸收。。？
     }
 
     return color;
@@ -209,4 +199,35 @@ void Scene::updateHit()
         hits[i].cnt = hits[i].cnt + (int)(CONST::a * hits[i].ncnt);
         hits[i].ncnt = 0;
     }
+}
+
+void Scene::processPhotons()
+{
+    tree.create(photonHits);
+
+    int size = hits.size();
+    for (int i=0;i< size;i++)
+    {
+
+        std::vector<Hit> photons = tree.findRange(hits[i], hits[i].radius);
+        //std::cout << i<<": "<<photons.size()<<std::endl;
+        for (int j=0;j< photons.size();j++)
+        {
+            hits[i].cnt++;//增加一个计数
+
+            cv::Vec3d color(0, 0, 0);
+            double inten = 0.0;
+            inten += Phong(photons[j], hits[i].Pd, CONST::s);
+            //std::cout << "photon inten: "<<inten<<std::endl;
+
+            color[2] += hits[i].r * inten;
+            color[1] += hits[i].g * inten;
+            color[0] += hits[i].b * inten;
+
+            //std::cout << hits[i].px<<": "<<hits[i].py<<std::endl;
+            hits[i].color += color;
+        }
+    }
+
+    photonHits.clear();
 }

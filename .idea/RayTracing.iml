@@ -10,7 +10,6 @@
       <sourceFolder url="file://$MODULE_DIR$/Hit.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Ray.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Scene.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/DataType.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Scene.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Kd_tree.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Camera.h" isTestSource="false" />

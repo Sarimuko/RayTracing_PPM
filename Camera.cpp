@@ -32,14 +32,24 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
             }
             std::cout << "finished: "<<i<<std::endl;
         }
+    //scene.tree.create(scene.hits);
 
-    scene.shootPhoton(100000, *(scene.lights[0]));
-
-    int hitsize = scene.hits.size();
-    for (int i=0;i < hitsize;i++)
+    for (int iter = 0;iter < 10; iter ++)
     {
-        photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py) += scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color);
+        scene.shootPhoton(100000, *(scene.lights[0]));
+
+        int hitsize = scene.hits.size();
+        for (int i=0;i < hitsize;i++)
+        {
+            photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py) += scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color);
+        }
+
+        cv::imshow("test", photo);
+        cv::waitKey();
     }
+
+
+
     //std::cout << "visual point"<<scene.hits.size() << std::endl;
 
 
