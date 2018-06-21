@@ -19,6 +19,9 @@ namespace CONST
 
     static double pi = 3.1415926;
     static double rou = 0.5;
+
+    static double EPS = 1e-5;
+    static double INF = 1e50;
 }
 
 #endif //RAYTRACING_CONST_H

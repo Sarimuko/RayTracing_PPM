@@ -3,190 +3,156 @@
 //
 
 #include "Bezier.h"
-#include "Functions.h"
+#include <math.h>
 
-Color Bezier::getColor(const Vector3 &P)
+cv::Point2d Bezier::getCurve(double t)
 {
-    return Primitive::getColor(P);
+    std::vector<cv::Point2d> tmp1, tmp2;
+    tmp1 = controlPoints;
+    for (int i=0;i<cpCnt - 1;i++)
+    {
+        int num = cpCnt - i - 1;
+        for (int j=0;j< num;j++)
+        {
+            cv::Point2d p = t * tmp1[j] + (1 - t) * tmp1[j + 1];
+            tmp2.push_back(p);
+        }
+        tmp1 = tmp2;
+    }
+    return tmp1[0];
 }
 
-Hit Bezier::collide(const Ray &o_ray)
+cv::Point3d Bezier::getPoint(double t, double theta)
 {
-#ifdef DEBUG
-    static double tot_time = 0, eq_time = 0;
-    double st = clock();
-    assert(o_ray.V.x == o_ray.V.x && o_ray.V.y == o_ray.V.y && o_ray.V.z == o_ray.V.z);
-#endif
-    //if (!o_ray.crash(bbox)) return Collision(this);
-    cv::Point3d O = o_ray.p0 - this->P;
-    cv::Point3d V = o_ray.pd.transformedToNewAxis(Dx, Dy, Dz);
-    O = O.transformedToNewAxis(Dx, Dy, Dz);
-    Ray new_ray(O, V);
+    return origin + py(t) * Dz + Dx * px(t) * cos(theta) + Dy * px(t) * sin(theta);
+
+}
+
+Hit Bezier::RayCast(Ray ray)
+{
+    //解方程 B(tb, theta) = ray.p0 + t * ray.pd;
+
+    cv::Point3d P = ray.p0 - origin;
+    cv::Point3d Pd = ray.pd;
+    //O = O.transformedToNewAxis(Dx, Dy, Dz);
+    Ray new_ray(P, Pd);
     //Solve t,u in the equations
-    // P(t).x^2 = (O.x+u*V.x)^2 + (O.y+u*V.y)^2
-    // P(t).y   = O.z + u*V.z;
+    // P(t).x^2 = (P.x+u*Pd.x)^2 + (P.y+u*Pd.y)^2
+    // P(t).y   = P.z + u*Pd.z;
     Polynomial eq;
     std::vector<std::complex<double>> ts;
-#ifdef DEBUG
-    double st_eq = clock();
-#endif
-    if (!sign(V.z)) {eq = (py - O.z); eq.roots(ts);}
+
+    if (!sign(Pd.z)) {eq = (py - P.z); eq.roots(ts); }//防止溢出
     else {
-        Polynomial nu = (py - O.z) / V.z;
-        eq = pow(px, 2) - pow(O.x + nu * V.x, 2) - pow(O.y + nu * V.y, 2);
+        Polynomial nu = (py - P.z) / Pd.z;
+        eq = pow(px, 2) - pow(P.x + nu * Pd.x, 2) - pow(P.y + nu * Pd.y, 2);
         eq.roots(ts);
-    }
-#ifdef DEBUG
-    eq_time += clock() - st_eq;
-#endif
+    }//这里解出来的是beizier曲线的t
 
     double ans_t, ans_theta;
-    Collision coll(this); coll.dist = INF;
-#ifdef DEBUG
-    assert(!(coll.dist < INF));
-#endif
-    for (auto c : ts) {
-        if (sign(c.imag())) continue;
-        double t = c.real(), nu = -1;
-        //if ((sign(V.z) && sign((t - 1)/fabs(V.z), 1) > 0 || sign(t/fabs(V.z) > 0), 1) || sign(t - 1) > 0 || sign(t) < 0) continue;
-        if (sign(t - 1) > 0 || sign(t) < 0) continue;
-        t = max(0., min(1., t));
-        if (sign(eq(t), 1e-3)) continue;
-        if (sign(V.z)) nu = (py(t) - O.z) / V.z;
-        else {
-            Vector3 center(0, 0, O.z);
+    Hit hit;
+    hit.t = CONST::INF;
+
+    for (auto c: ts)//枚举所有的根
+    {
+        std::cout << c<<std::endl;
+        if (sign(c.imag()))//虚根，舍掉
+            continue;
+
+        double t = c.real();
+        if (sign(t - 1) > 0 || sign(t) < 0)//超出范围的根，舍掉
+            continue;
+
+        t = max(0., min(1, t));//将根划归到0，1区间
+
+        double u;
+
+        if (sign(Pd.z))
+        {
+            u = (py(t) - P.z)/Pd.z;
+        }
+        else
+        {
             double r = px(t);
-            if (sign(new_ray.dis2(center) - r * r) >= 0)
+
+            cv::Point3d center(0, 0, py(t));
+            double d = new_ray.dis2(center);
+            //std::cout << "d: "<<d << "r * r: " << r * r<<std::endl;
+            if (sign(d - r * r) > 0)//没有交点
                 continue;
-            Vector3 l = center - new_ray.O;
-            double d2 = l.cross(new_ray.V).len2() / new_ray.V.len2();
-            double tp = l.dot(new_ray.V); // > 0 <90 ; < 0 > 90
-            double x = sqrt(r * r - d2);
-            if (sign(l.len2() - r * r) <= 0) nu = tp + x;
-            else nu = tp - x;
-            assert(nu > 0);
+
+            double l = P.x * P.x + P.y * P.y;
+
+            //std::cout << "l: "<<l<<std::endl;
+            double u0 = sqrt(l - d);
+            double u1 = sqrt(r * r - d);
+
+            u = u0 - u1;
+
         }
-        //nu = (py(t) - O.z) / V.z;
-        if (sign(nu, 1e-3) <= 0) continue;//TODO: ???
-//        double theta;
-//        Vector3 nP = new_ray.travel(nu);
-//        if (!sign(nP.x) && !sign(nP.y)) theta = 0;
-//        else theta = atan2(nP.y, nP.x);
-//        if( || getPoint(t, theta) != coll.P) continue;
-#ifdef DEBUG
-        assert(std::abs(pow(px(t),2) - new_ray.travel(nu).x * new_ray.travel(nu).x
-        - new_ray.travel(nu).y * new_ray.travel(nu).y) < 0.1);
-        assert(std::abs(py(t) - new_ray.travel(nu).z) < 0.1);
-#endif
-        if (coll.dist > nu) coll.dist = nu, ans_t = t;
-    }
-    if (coll.dist < INF) {
-        coll.crash = true;
-        Vector3 nP = new_ray.travel(coll.dist);
-        //coll.N = getN(ans_t, theta);
-        Vector3 p_theta(-nP.y, nP.x, 0);
-        double dpx_v = dpx(ans_t), dpy_v = dpy(ans_t), px_v = px(ans_t);
-        Vector3 p_t(nP.x / px_v * dpx_v, nP.y / px_v * dpx_v, dpy_v);
-        coll.N = p_t.cross(p_theta).normalized();
-        if (new_ray.V.dot(coll.N) > 0) coll.N = -coll.N;
-        Vector3 ox(1, 0, 0), oy(0, 1, 0), oz(0, 0, 1);
-        ox = ox.transformedToNewAxis(Dx, Dy, Dz);
-        oz = oz.transformedToNewAxis(Dx, Dy, Dz);
-        oy = oy.transformedToNewAxis(Dx, Dy, Dz);
-        coll.N = coll.N.transformedToNewAxis(ox, oy, oz);
-        coll.P = o_ray.travel(coll.dist);
-        if (!sign(nP.x) && !sign(nP.y)) ans_theta = 0;
-        else {
-            ans_theta = atan2(nP.y, nP.x) + PI*(px_v < 0);
-            if (ans_theta > PI) ans_theta -= 2 * PI;
+
+        if (u < hit.t)
+        {
+            hit.t = u;
+            ans_t = t;
         }
-        coll.color = getColor(ans_t, ans_theta);
+
+
     }
-#ifdef DEBUG
-    if (coll.crash) {
-        assert(coll.N.x == coll.N.x && coll.N.y == coll.N.y && coll.N.z == coll.N.z);
-        assert(getPoint(ans_t, ans_theta).equal(coll.P, 1e-1));
+
+    if (hit.t < CONST::INF)
+    {
+        hit.valid = true;
+        hit.P = ray.p0 + hit.t * ray.pd;
+        hit.Pd = ray.pd;
+
+        cv::Point3d Z(0, 0, 1);
+        cv::Point3d X(hit.P.x - origin.x, hit.P.y - origin.y, 0);
+        X = regu(X);
+
+        std::cout << X<<std::endl;
+
+        hit.N = dpy(ans_t) * X - dpx(ans_t) * Z;
+        hit.N = regu(hit.N);
+
     }
-//    tot_time += clock() - st;
-//    if (int(tot_time / CLOCKS_PER_SEC) % 5 == 0)
-//        printf("tot_time=%.3fs eq_time=%.3fs ratio=%.3f\n", tot_time / CLOCKS_PER_SEC, eq_time / CLOCKS_PER_SEC, eq_time / tot_time);
-#endif
-    return coll;
+
+    return hit;
 }
 
-void Bezier::input(const std::string &var, std::stringstream &ss)
+bool Bezier::Intersect(Ray ray)
 {
-    if (var == "P=") ss >> P;
-    else if (var == "Dz=") ss >> Dz;
-    else if (var == "S=") ss >> S;
-    else if (var == "control_points=") {
-        int n;
-        ss >> n;
-        for (int i = 0; i < n; ++i) {
-            Vector3 p;
-            ss >> p.x >> p.y;
-            control_points.push_back(p);
-        }
-    }
-    else Primitive::input(var, ss);
+    Hit hit = RayCast(ray);
+
+    return hit.valid;
 }
 
 std::pair<Polynomial, Polynomial> Bezier::P2d(int l, int n)
 {
     if (n == 1)
-        return std::pair<Polynomial, Polynomial>(control_points[l][0], control_points[l][1]);
+        return std::pair<Polynomial, Polynomial>(controlPoints[l].x, controlPoints[l].y);
     std::pair<Polynomial, Polynomial> lhs = P2d(l, n - 1), rhs = P2d(l + 1, n - 1);
     return std::pair<Polynomial, Polynomial>(Polynomial(1, -1) * lhs.first  + Polynomial(0, 1) * rhs.first,
                                              Polynomial(1, -1) * lhs.second + Polynomial(0, 1) * rhs.second);
 }
-//Vector3 Bezier::P(double u, double v)
-//{
-//    double theta = v * 2 * PI;
-//    Point p2d = P2d(u, 0, n);
-//    return Point(p2d.x * cos(theta), p2d.x * sin(theta), p2d.y);
-//}
+
 void Bezier::init()
 {
     printf("initializing Bezier\n");
-    Dz = Dz.normalized();
-    if (!sign(Dz.x) && !sign(Dz.y - 1) && !sign(Dz.z)) Dx = Vector3(1, 0, 0);
-    else Dx = Vector3(0, 1, 0).cross(Dz).normalized();
-    Dy = Dz.cross(Dx);
-    for (auto &i :control_points) i /= S;
-    std::pair<Polynomial, Polynomial> tmp = P2d(0, control_points.size());
+
+    std::pair<Polynomial, Polynomial> tmp = P2d(0, controlPoints.size());
     px = tmp.first; py = tmp.second;
     dpx = px.derivative(); dpy = py.derivative();
-    printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 0., px(0), py(0));
-    printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 0.5, px(0.5), py(0.5));
-    printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 1., px(1), py(1));
-    std::cout << "Bezier points:\n";
-    for (float u = 0.0f, i = 0, du = 0.01; u <= 1.0f; u += du, i++) {
-        for (float v = 0.0f, j = 0, dv = 0.01; v <= 1.0f; v += dv, j++) {
-            bbox.include(getPoint(u, v * 2 * PI));
-        }
-    }
-    std::cout << bbox << std::endl;
-}
 
-//Vector3 Bezier::getN(double t, double theta)
-//{
-//    Vector3 p = getPoint(t, theta);
-//
-//}
-//
-cv::Point3d Bezier::getPoint(double t, double theta)
-{
-    return P + py(t) * Dz + Dx * px(t) * cos(theta) + Dy * px(t) * sin(theta);
-}
+    Dz.x = Dz.y = Dx.y = Dx.z = Dy.x = Dy.z = 0;
+    Dz.z = Dx.x = Dy.y = 1;
 
+    /*printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 0., 0., getPoint(0., 0.).x, getPoint(0., 0.).y, getPoint(0., 0.).z);
+    printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 0.5, 0.5 * CONST::pi, getPoint(0.5, 0.5 * CONST::pi).x, getPoint(0.5, 0.5 * CONST::pi).y, getPoint(0.5, 0.5 * CONST::pi).z);
+    printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 1, 0., getPoint(0., 0.).x, getPoint(0., 0.).y, getPoint(0., 0.).z);*/
+    //printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 0.5, px(0.5), py(0.5));
+    //printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 1., px(1), py(1));
 
-cv::Vec3d Bezier::getColor(double t, double theta)
-{
-    if (texture == 0) return color;
-    double x = t, y = theta / CONST::pi / 2 + 0.5;
-#ifdef DEBUG
-    assert(sign(x) >= 0 && sign(y) >=0 && sign(x - 1) <= 0 && sign(y - 1) <= 0);
-#endif
-    return getTexture(texture, x, y);
+    //std::cout << bbox << std::endl;
 }
 

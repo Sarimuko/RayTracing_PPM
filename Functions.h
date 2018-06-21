@@ -11,6 +11,23 @@
 #include "Hit.h"
 #include "const.h"
 
+const double PI = acos(-1);
+
+
+
+static inline int sign(double x, double eps = CONST::EPS){return x < -eps ? -1 : (x > eps);}
+static inline double sqr(double x) {return x * x;}
+static inline double randreal(){ return (1.0 * rand() * (RAND_MAX + 1.) + rand()) / ((RAND_MAX + 1.) * (RAND_MAX + 1.) - 1); }
+
+static double max(double a, double b)
+{
+    return a > b? a: b;
+}
+
+static double min(double a, double b)
+{
+    return a < b? a : b;
+}
 static cv::Point3d regu(cv::Point3d o)
 {
     cv::Point3d res = o;
@@ -107,7 +124,8 @@ static double dist(cv::Point3d a, cv::Point3d b)
 
 static cv::Point3d getTexture(int texture, int x, int y)
 {
-
+    cv::Point3d color;
+    return color;
 }
 
 

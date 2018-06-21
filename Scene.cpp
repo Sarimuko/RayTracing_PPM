@@ -243,17 +243,23 @@ void Scene::processPhotons()
 
         }
 
-        double rate = (hits[i].cnt + CONST::a * photonNum)/(hits[i].cnt + photonNum);//改变半径的系数
+        if (photonNum > 0)
+        {
+            double rate = (hits[i].cnt + CONST::a * photonNum)/(hits[i].cnt + photonNum);//改变半径的系数
 
 
 
-        hits[i].radius = hits[i].radius * sqrt(rate);
-        hits[i].color = hits[i].color + rate * color;
+            hits[i].radius = hits[i].radius * sqrt(rate);
+            std::cout << hits[i].radius<<std::endl;
 
-        //hits[i].color /= 100
-        //hits[i].ncolor[0] = hits[i].ncolor[1] = hits[i].ncolor[2] = 0;
+            hits[i].color = hits[i].color + rate * color;
 
-        hits[i].cnt = hits[i].cnt + (int)(CONST::a * photonNum);
+            //hits[i].color /= 100
+            //hits[i].ncolor[0] = hits[i].ncolor[1] = hits[i].ncolor[2] = 0;
+
+            hits[i].cnt = hits[i].cnt + (int)(CONST::a * photonNum);
+        }
+
         //hits[i].ncnt = 0;
 
 

@@ -14,7 +14,7 @@ class Object {//物体基类
     friend class Scene;
 
 public:
-    cv::Point3f orgin;//模型原点位置
+    cv::Point3d origin;//模型原点位置
     int id;//物体id
 
     bool isBackground = false;

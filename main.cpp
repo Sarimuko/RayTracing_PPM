@@ -8,11 +8,12 @@
 #include "Ray.h"
 #include "Scene.h"
 #include "Kd_tree.h"
+#include "Bezier.h"
 
 int main() {
     //std::cout << "Hello, World!" << std::endl;
 
-    Camera camera(1999, 500, 500, -1, 0, 0, 500);
+    /*Camera camera(1999, 500, 500, -1, 0, 0, 500);
     Scene scene;
 
     Ball ball(50, 500, 150, 100, 0);
@@ -66,7 +67,7 @@ int main() {
     cv::imshow("test", photo);
     cv::waitKey();
 
-    cv::imwrite("/Users/wangyihan/Desktop/ComputerGraphics.png",photo);
+    cv::imwrite("/Users/wangyihan/Desktop/ComputerGraphics.png",photo);*/
 
     /*Kd_tree test;
     Hit hit1;
@@ -102,5 +103,30 @@ int main() {
     std::vector<Hit*> ans = test.findRange(root, target, 6);
     std::cout << ans.size()<<std::endl;*/
 
+    Bezier test;
+
+    test.origin.x = test.origin.y = 100;
+    test.origin.z = 0;
+    cv::Point2d p1(29.2, 4.2);
+    cv::Point2d p2(32.5, 16.6);
+    cv::Point2d p3(27.5, 28.1);
+    cv::Point2d p4(26.9, 40.6);
+
+    test.controlPoints.push_back(p1);
+    test.controlPoints.push_back(p2);
+    test.controlPoints.push_back(p3);
+    test.controlPoints.push_back(p4);
+
+    test.init();
+
+    Ray ray;
+    cv::Point3d P(0, 0, 30);
+    cv::Point3d Pd(1, 1, 0);
+    ray.p0 = P;
+    ray.pd = Pd;
+
+    Hit hit = test.RayCast(ray);
+
+    std::cout << hit.t << " "<< hit.N<<std::endl;
     return 0;
 }

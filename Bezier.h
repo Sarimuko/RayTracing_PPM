@@ -4,39 +4,31 @@
 
 #ifndef RAYTRACING_BEZIER_H
 #define RAYTRACING_BEZIER_H
-
-
-#include <ostream>
 #include "Object.h"
+#include "Polynomial.h"
+#include <utility>
 
-class Bezier : public Object{
+
+class Bezier: public Object
+{
 public:
-    //BoundingBox bbox;
-    //Polynomial px, py, dpx, dpy;//p(t)
-    cv::Vec3d Dz, Dx, Dy, P;
-    double S;
-    std::vector<cv::Vec3d> control_points;
 
-    cv::Vec3d getColor(const cv::Vec3d &P);
-
-    Hit collide(const Ray &ray);
-
-    //void input(const std::string &var, std::stringstream &ss) override;
-
+    std::vector<cv::Point2d> controlPoints;
+    int cpCnt;//控制点及个数
     void init();
 
-    cv::Point3d getN(double t, double theta);
+    cv::Point3d Dz, Dx, Dy;
 
-    cv::Point3d getPoint(double t, double theta);
+    Polynomial px, py, pz, dpx, dpy;
 
-    //std::pair<Polynomial, Polynomial> P2d(int l, int n);
 
-    friend std::ostream &operator<<(std::ostream &os, const Bezier &bezier);
+    cv::Point3d getPoint(double t, double theta);//得到某个点的坐标
+    cv::Point2d getCurve(double t);//得到曲线的坐标（割平面）
+    std::pair<Polynomial, Polynomial> P2d(int l, int n);
 
-    cv::Vec3d getColor(double t, double theta);
+    Hit RayCast(Ray ray);
 
-    //void generateMeshes(std::vector<Vector3> &points, std::vector<int4> &meshes) override;
+    bool Intersect(Ray ray);
 };
-
 
 #endif //RAYTRACING_BEZIER_H
