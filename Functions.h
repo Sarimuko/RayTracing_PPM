@@ -9,6 +9,7 @@
 #include <math.h>
 //#include "Ray.h"
 #include "Hit.h"
+#include "const.h"
 
 static cv::Point3d regu(cv::Point3d o)
 {
@@ -61,7 +62,7 @@ static double Blinn_Phong(Hit hit, cv::Vec3d v_, double s)//光线的hit信息�
     cv::Vec3d r = hit.Rd;
     cv::Vec3d h = (v + l)/2;
 
-    double inten = hit.deffuseR + hit.reflectCoefficience * pow(norm(n.t() * h)/norm((n.t() * l)), s);
+    double inten = hit.deffuseR * CONST::rou + hit.deffuseR * pow(norm(n.t() * h)/norm((n.t() * l)), s);
 
     return inten;
 }
@@ -102,6 +103,11 @@ static bool cmp2(Hit a, Hit b)
 static double dist(cv::Point3d a, cv::Point3d b)
 {
     return cv::norm(a - b);
+}
+
+static cv::Point3d getTexture(int texture, int x, int y)
+{
+
 }
 
 

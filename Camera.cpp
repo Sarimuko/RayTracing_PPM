@@ -34,18 +34,24 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
         }
     //scene.tree.create(scene.hits);
 
-    for (int iter = 0;iter < 10; iter ++)
+    for (int iter = 0;iter < 10000; iter ++)
     {
-        scene.shootPhoton(100000, *(scene.lights[0]));
+        scene.shootPhoton(1000, *(scene.lights[0]));
 
         int hitsize = scene.hits.size();
         for (int i=0;i < hitsize;i++)
         {
-            photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py) += scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color);
+            photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py) = scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color);
         }
 
-        cv::imshow("test", photo);
-        cv::waitKey();
+        if (iter % 100 == 0)
+        {
+            //cv::imshow("test", photo);
+            //cv::waitKey();
+            cv::imwrite("/Users/wangyihan/Desktop/ComputerGraphics_.png",photo);
+            std:: cout << iter<<std::endl;
+        }
+
     }
 
 

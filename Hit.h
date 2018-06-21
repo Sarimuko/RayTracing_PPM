@@ -22,7 +22,7 @@ struct Hit//储存相交点的信息
     cv::Point3d Rd;//反射方向
     double RI;//贡献权重
 
-    double radius = 10;//光子半径
+    double radius = 5;//光子半径
 
     double reflectCoefficience;//相交表面的反射系数
     double refractCoefficience;//相交表面的折射系数

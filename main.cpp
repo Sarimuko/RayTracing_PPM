@@ -12,11 +12,11 @@
 int main() {
     //std::cout << "Hello, World!" << std::endl;
 
-    Camera camera(19999, 5000, 5000, -1, 0, 0, 500);
+    Camera camera(1999, 500, 500, -1, 0, 0, 500);
     Scene scene;
 
-    Ball ball(500, 5000, 1500, 1000, 0);
-    Ball ball_small(2000, 1900, 2000, 300, 1);
+    Ball ball(50, 500, 150, 100, 0);
+    Ball ball_small(200, 190, 200, 30, 1);
 
     ball.r = 0;
     ball.g = ball.b = 0;
@@ -24,14 +24,14 @@ int main() {
     ball_small.b = 200;
     ball_small.r = ball_small.g = 0;
 
-    ball.refractR = 0.4;
+    //ball.refractR = 0.4;
     //ball_small.refractR = 0.6;
 
     Plane back(1, 0, 0, 0);
     back.r = 255;
     back.g = 182;
     back.b = 193;
-    Plane front(1, 0, 0, -20000);
+    Plane front(1, 0, 0, -2000);
     front.r = 255;
     front.g = 182;
     front.b = 193;
@@ -39,11 +39,11 @@ int main() {
     Plane left(0, 1, 0, 0);
     left.r = 255, left.g = 215, left.b = 0;
 
-    Plane right(0, 1, 0, -10000);
+    Plane right(0, 1, 0, -1000);
     right.r = 255, right.g = 215, right.b = 0;
     Plane down(0, 0, 1, 0);
     down.r = 255, down.g = 215, down.b = 0;
-    Plane up(0, 0, 1, -10000);
+    Plane up(0, 0, 1, -1000);
     up.r = 255, up.g = 215, up.b = 0;
 
     scene.addObject(&ball);
@@ -59,7 +59,7 @@ int main() {
 
 
 
-    Light light(10000, 5000, 9999, 0.7);
+    Light light(1000, 500, 999, 0.7);
     scene.addLight(&light);
 
     cv::Mat photo = camera.CreatePhoto(scene);

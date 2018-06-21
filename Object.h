@@ -26,6 +26,9 @@ public:
     double refractR = 0;//refraction rate折射率
     double reflectR = 1.0;//反射率
 
+    cv::Vec3d color;
+
+    int texture = 0;//id of texture
 
     double r = 23, g = 123, b = 17;//物体固有颜色
     Object()
