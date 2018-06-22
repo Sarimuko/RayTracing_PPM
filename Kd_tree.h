@@ -28,9 +28,19 @@ class Kd_tree
 public:
     int k;//dimension
 
+    Node* nodes;
+    int size;
+    int cnt = 0;
+
     Node* root = NULL;
 
 
+    Kd_tree()
+    {
+        //this -> size = size;
+        size = CONST::PHOTON_PER_ITER;
+        nodes = new Node[size];
+    }
     //void insert(Node* node);
     void create(std::vector<Hit> data);
     void create(Node** root, std::vector<Hit> data, int begin, int end, int split);//建立

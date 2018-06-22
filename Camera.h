@@ -19,6 +19,10 @@ private:
 
 public:
     cv::Mat CreatePhoto(Scene& scene);//to do
+    cv::Mat CreatePhotoPT(Scene& scene);//basic function
+
+
+    double getPixelLength(const cv::Vec3d &P);
     Ray ProduceRay(cv::Point3d p);//produce a ray from camera to point p
 
     Camera(double px, double py, double pz, double dx, double dy, double dz, double fd)

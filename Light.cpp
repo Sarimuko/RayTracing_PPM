@@ -15,7 +15,7 @@ Ray Light::getRay(cv::Point3d p)
     ray.pd = regu(ray.pd);
 
     ray.intensity = intensity;
-    ray.rayType = 1;//light
+    ray.rayType = 2;//light
 
     return ray;
 }
@@ -24,14 +24,26 @@ Ray Light::getRay(cv::Point3d p)
 
 Ray Light::randomRay()
 {
-    double phi = rand()/(double)RAND_MAX * 2 * CONST::pi;
-    double theta = rand()/(double)RAND_MAX * CONST::pi;
-
     Ray ray;
     ray.p0 = position;
-    ray.pd.x = sin(theta) * cos(phi);
-    ray.pd.y = sin(theta) * sin(phi);
-    ray.pd.z = cos(theta);
+
+
+    double x, y, z;
+    do {
+        x = 2. * randreal() - 1;
+        y = 2. * randreal() - 1;
+        z = 2. * randreal() - 1;
+    } while (x*x+y*y+z*z>1 || x*x+y*y+z*z < CONST::EPS);
+    //return Vector3(x, y, z).normalized();
+
+    ray.pd.x = x;
+    ray.pd.y = y;
+    ray.pd.z = z;
+
+    ray.intensity = intensity;
+
+    ray.pd = regu(ray.pd);
+
 
     ray.intensity = intensity;
 

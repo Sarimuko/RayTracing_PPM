@@ -55,7 +55,7 @@ Hit Bezier::RayCast(Ray ray)
 
     for (auto c: ts)//枚举所有的根
     {
-        std::cout << c<<std::endl;
+        //std::cout << c<<std::endl;
         if (sign(c.imag()))//虚根，舍掉
             continue;
 
@@ -81,6 +81,10 @@ Hit Bezier::RayCast(Ray ray)
             if (sign(d - r * r) > 0)//没有交点
                 continue;
 
+            cv::Point3d ll = center - hit.P;
+            if (sign(hit.Pd.ddot(ll)) <= 0)
+                continue;
+
             double l = P.x * P.x + P.y * P.y;
 
             //std::cout << "l: "<<l<<std::endl;
@@ -91,7 +95,7 @@ Hit Bezier::RayCast(Ray ray)
 
         }
 
-        if (u < hit.t)
+        if (sign(u) > 0 && u < hit.t)
         {
             hit.t = u;
             ans_t = t;
@@ -110,10 +114,24 @@ Hit Bezier::RayCast(Ray ray)
         cv::Point3d X(hit.P.x - origin.x, hit.P.y - origin.y, 0);
         X = regu(X);
 
-        std::cout << X<<std::endl;
+        //std::cout << X<<std::endl;
 
         hit.N = dpy(ans_t) * X - dpx(ans_t) * Z;
         hit.N = regu(hit.N);
+
+        hit.Rd = getReflect(hit.Pd, hit.N);
+
+        hit.deffuseR = rou_d;
+        hit.reflectCoefficience = reflectR;
+        hit.refractCoefficience = refractR;
+
+        hit.r = r;
+        hit.g = g;
+        hit.b = b;
+
+
+        hit.spec = spec;
+        //std::cout << hit.N<<hit.P<<hit.Pd<<hit.Rd;
 
     }
 
@@ -147,6 +165,13 @@ void Bezier::init()
     Dz.x = Dz.y = Dx.y = Dx.z = Dy.x = Dy.z = 0;
     Dz.z = Dx.x = Dy.y = 1;
 
+    /*for (auto point: controlPoints)
+    {
+        boundingBox.include()
+    }*/
+    //todo boundingbox
+
+
     /*printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 0., 0., getPoint(0., 0.).x, getPoint(0., 0.).y, getPoint(0., 0.).z);
     printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 0.5, 0.5 * CONST::pi, getPoint(0.5, 0.5 * CONST::pi).x, getPoint(0.5, 0.5 * CONST::pi).y, getPoint(0.5, 0.5 * CONST::pi).z);
     printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 1, 0., getPoint(0., 0.).x, getPoint(0., 0.).y, getPoint(0., 0.).z);*/
@@ -156,3 +181,16 @@ void Bezier::init()
     //std::cout << bbox << std::endl;
 }
 
+cv::Vec3b Bezier::getColor(cv::Point3d P)
+{
+    cv::Vec3b color;
+    if (texture.data == NULL)
+    {
+        color[0] = r;
+        color[1] = g;
+        color[2] = b;
+
+        return color;
+    }
+    return color;
+}

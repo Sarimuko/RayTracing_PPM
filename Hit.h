@@ -22,11 +22,12 @@ struct Hit//储存相交点的信息
     cv::Point3d Rd;//反射方向
     double RI;//贡献权重
 
-    double radius = 5;//光子半径
+    double radius = 1;//光子半径
 
     double reflectCoefficience;//相交表面的反射系数
     double refractCoefficience;//相交表面的折射系数
     double deffuseR;//漫反射系数
+    double spec;
 
     double n0, n1;//击中交界面两侧的折射率
 
@@ -37,7 +38,7 @@ struct Hit//储存相交点的信息
     double r, g, b;
 
     cv::Vec3d color;//累积的颜色
-    cv::Vec3d ncolor;//一轮迭代的颜色
+    //cv::Vec3d ncolor;//一轮迭代的颜色
 };
 
 

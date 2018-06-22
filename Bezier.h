@@ -7,11 +7,14 @@
 #include "Object.h"
 #include "Polynomial.h"
 #include <utility>
+#include "BoundingBox.h"
 
 
 class Bezier: public Object
 {
 public:
+
+    BoundingBox boundingBox;
 
     std::vector<cv::Point2d> controlPoints;
     int cpCnt;//控制点及个数
@@ -22,6 +25,7 @@ public:
     Polynomial px, py, pz, dpx, dpy;
 
 
+    cv::Vec3b getColor(cv::Point3d P);
     cv::Point3d getPoint(double t, double theta);//得到某个点的坐标
     cv::Point2d getCurve(double t);//得到曲线的坐标（割平面）
     std::pair<Polynomial, Polynomial> P2d(int l, int n);

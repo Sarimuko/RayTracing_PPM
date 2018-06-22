@@ -13,11 +13,11 @@
 int main() {
     //std::cout << "Hello, World!" << std::endl;
 
-    /*Camera camera(1999, 500, 500, -1, 0, 0, 500);
+    Camera camera(10, 5, 3, -1, 0, 0, 5);
     Scene scene;
 
-    Ball ball(50, 500, 150, 100, 0);
-    Ball ball_small(200, 190, 200, 30, 1);
+    Ball ball(2, 8, 2, 1.5, 0);
+    Ball ball_small(2, 1.9, 0.3, 0.3, 1);
 
     ball.r = 0;
     ball.g = ball.b = 0;
@@ -25,14 +25,15 @@ int main() {
     ball_small.b = 200;
     ball_small.r = ball_small.g = 0;
 
-    //ball.refractR = 0.4;
+    ball.refractR = 0.9;
+    ball.reflectR = 0;
     //ball_small.refractR = 0.6;
 
     Plane back(1, 0, 0, 0);
     back.r = 255;
     back.g = 182;
     back.b = 193;
-    Plane front(1, 0, 0, -2000);
+    Plane front(1, 0, 0, -20);
     front.r = 255;
     front.g = 182;
     front.b = 193;
@@ -40,13 +41,33 @@ int main() {
     Plane left(0, 1, 0, 0);
     left.r = 255, left.g = 215, left.b = 0;
 
-    Plane right(0, 1, 0, -1000);
+    Plane right(0, 1, 0, -10);
     right.r = 255, right.g = 215, right.b = 0;
     Plane down(0, 0, 1, 0);
     down.r = 255, down.g = 215, down.b = 0;
-    Plane up(0, 0, 1, -1000);
+    Plane up(0, 0, 1, -10);
     up.r = 255, up.g = 215, up.b = 0;
 
+    Bezier test;
+
+    test.rou_d = 0.7;
+    test.reflectR = test.refractR = 0;
+
+    test.origin.x = test.origin.y = 10;
+    test.origin.z = 0;
+    cv::Point2d p1(2.92, 0.42);
+    cv::Point2d p2(3.25, 1.66);
+    cv::Point2d p3(2.75, 2.81);
+    cv::Point2d p4(2.69, 4.06);
+
+    test.controlPoints.push_back(p1);
+    test.controlPoints.push_back(p2);
+    test.controlPoints.push_back(p3);
+    test.controlPoints.push_back(p4);
+
+    test.init();
+
+    //scene.addObject(&test);
     scene.addObject(&ball);
     scene.addObject(&ball_small);
 
@@ -60,14 +81,17 @@ int main() {
 
 
 
-    Light light(1000, 500, 999, 0.7);
+    Light light(3, 9, 6, 0.7);
     scene.addLight(&light);
+
+    Light light2(3, 1, 6, 0.7);
+    scene.addLight(&light2);
 
     cv::Mat photo = camera.CreatePhoto(scene);
     cv::imshow("test", photo);
     cv::waitKey();
 
-    cv::imwrite("/Users/wangyihan/Desktop/ComputerGraphics.png",photo);*/
+    cv::imwrite("/Users/wangyihan/Desktop/ComputerGraphics.png",photo);
 
     /*Kd_tree test;
     Hit hit1;
@@ -103,7 +127,7 @@ int main() {
     std::vector<Hit*> ans = test.findRange(root, target, 6);
     std::cout << ans.size()<<std::endl;*/
 
-    Bezier test;
+    /*Bezier test;
 
     test.origin.x = test.origin.y = 100;
     test.origin.z = 0;
@@ -127,6 +151,6 @@ int main() {
 
     Hit hit = test.RayCast(ray);
 
-    std::cout << hit.t << " "<< hit.N<<std::endl;
+    std::cout << hit.t << " "<< hit.N<<std::endl;*/
     return 0;
 }

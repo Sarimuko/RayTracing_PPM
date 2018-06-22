@@ -9,12 +9,13 @@
 #include "Object.h"
 #include "Light.h"
 #include "Kd_tree.h"
+//#include "const.h"
 
 
 class Scene {
 
-    friend class Camera;
-private:
+    //friend class Camera;
+public:
     std::vector<Object*> objectList;//物体列表
     std::vector<Light*> lights;//光源列表
 
@@ -25,11 +26,10 @@ private:
 
     Kd_tree tree;
 
-public:
     void addObject(Object* object){objectList.push_back(object);}//加入一个物体
     void addHit(Hit hit){hits.push_back(hit);  Ntotal += 1;}
     Object* getObject(int id);//获得一个id为id的物体，如果找不到，返回NULL
-    void shootPhoton(int num, Light light);//发射光子
+    void shootPhoton(int num);//发射光子
 
     cv::Vec3b RayTracing(Ray& ray, double coefficient, int iter, int x, int y);
 

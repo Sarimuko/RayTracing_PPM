@@ -9,6 +9,7 @@ void Kd_tree::create(Node** root, std::vector<Hit> data, int begin, int end, int
     if (begin >= end)
         return;
 
+
     std::vector<Hit>::iterator b = data.begin(), e = data.begin();
     b += begin;
     e += end;
@@ -23,25 +24,27 @@ void Kd_tree::create(Node** root, std::vector<Hit> data, int begin, int end, int
 
     int mid = (begin + end) / 2;
 
-    *root = new Node();
-    (*root) -> data = data[mid];
+    *root = &nodes[cnt++];
+    (*root) -> l = (*root) -> r = NULL;
+
     (*root) -> split = split;
 
 
     if (begin == end - 1)
     {
         (*root) -> isLeaf = true;
-        //(*root) -> data = data[begin];
+        (*root) -> data = data[begin];
         return;
     }
 
-    //std::cout << begin<< ' '<<mid <<' ' <<end<<std::endl;
+    std::cout << begin<< ' '<<mid <<' ' <<end<<std::endl;
 
     while (mid + 1 < end && ((cv::Vec3d)data[mid].P)[split] == ((cv::Vec3d)data[mid + 1].P)[split])
     {
         mid += 1;
     }
 
+    (*root) -> data = data[mid];
     create(&((*root) -> l), data, begin, mid, (split + 1) % 3);
     create(&((*root) -> r), data, mid + 1, end, (split + 1) % 3);
 }
@@ -60,7 +63,7 @@ std::vector<Hit> Kd_tree::findRange( Node *root, Hit target, double range)
     dist_sq = dist(root -> data.P, target.P);    //计算搜索路径中每个节点和target的距离
     //std::cout << "1"<<std::endl;
 
-    if(dist_sq <= range) {//将范围内的近邻添加到结果向量res_nearest中
+    if(dist_sq <= range && (sign((root -> data.P - target.P).ddot(target.N)) == 0)) {//将范围内的近邻添加到结果向量res_nearest中
         //std::pair<_Examplar,double> temp(root->getDomElt(), dist_sq);
         ans.push_back(root -> data);
         //结果个数+1
@@ -93,6 +96,7 @@ std::vector<Hit> Kd_tree::findRange( Node *root, Hit target, double range)
 
 void Kd_tree::create(std::vector<Hit> data)
 {
+    cnt = 0;
     create(&root, data, 0, data.size(), 0);
 }
 

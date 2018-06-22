@@ -64,7 +64,7 @@ static double Phong(Hit hit, cv::Vec3d v_, double s)//返回Blinn-Phong模型的
     cv::Vec3d n = regu(hit.N);
     cv::Vec3d r = regu(hit.Rd);
 
-    double inten = hit.deffuseR  * abs(n.ddot(l)) + hit.reflectCoefficience * pow(std::max<double>(-r.ddot(v), 0), s);
+    double inten = hit.deffuseR  * abs(n.ddot(l)) + hit.spec * pow(std::max<double>(-r.ddot(v), 0), s);
     //std::cout << "pow" << l<< std::endl;
 
     return inten;
@@ -86,8 +86,29 @@ static double Blinn_Phong(Hit hit, cv::Vec3d v_, double s)//光线的hit信息�
 
 static cv::Point3d getRefract(cv::Point3d origin, double n0, double n1, cv::Point3d N)
 {
-    double sin0 = cv::norm(origin.cross(N));
+    origin = -origin;
+    double cos1 = N.dot(origin), sin22 = (1 - cos1 * cos1) * (n0/n1) * (n0/n1);
+
+    if (cos1 < 0)
+    {
+        N = -N;
+    }
+    //isRefracted = 0;
+    if (sin22 > 1) return getReflect(-1 * origin, N);
+    double cos2 = sqrt(1 - sin22);
+    //isRefracted = 1;
+    cv::Point3d tmp = -origin * (n0 / n1) - (cos2 - cos1 * n0 / n1) * N;
+    return regu(tmp);
+
+    /*double sin0 = cv::norm(origin.cross(N));
     double sin1 = sin0 * n0 / n1;
+
+    cv::Point3d rd;
+
+    if (sin1 > 0)
+    {
+        rd = getReflect(origin, N);
+    }
 
     cv::Point3d z = origin.cross(N);
     cv::Point3d i = z.cross(N);
@@ -95,10 +116,12 @@ static cv::Point3d getRefract(cv::Point3d origin, double n0, double n1, cv::Poin
 
 
 
-    cv::Point3d rd = rN - i * sin1/(sqrt(1 - sin1 * sin1));
+
+
+    rd = rN - i * sin1/(sqrt(1 - sin1 * sin1));
     rd = regu(rd);
 
-    return rd;
+    return rd;*/
 }
 
 
