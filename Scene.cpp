@@ -113,15 +113,9 @@ void Scene::shootPhoton(int num)
             //std::cout << ray.rayType<<std::endl;
             RayTracing(ray, 1, 0, 0, 0);
 
-            /*if (i % 100 == 0)
-                std::cout << i<< std::endl;*/
 
         }
     }
-
-//#pragma omp parallel for num_threads(4)
-
-
     processPhotons();
 
 }
@@ -142,6 +136,8 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
         hit.RI = coefficient;//加上权重信息
         hit.px = x;
         hit.py = y;
+
+        //std::cout << hit.P<<hit.RI << std::endl;
 
         addHit(hit);
 
@@ -236,11 +232,13 @@ void Scene::processPhotons()
             inten += photons[j].RI;
             //std::cout << "photon inten: "<<inten<<std::endl;
 
-            color[2] += hits[i].r * inten;
-            color[1] += hits[i].g * inten;
-            color[0] += hits[i].b * inten;
+            color[2] += (double)hits[i].r * inten;
+            color[1] += (double)hits[i].g * inten;
+            color[0] += (double)hits[i].b * inten;
 
         }
+
+        //std::cout << color<<std::endl;
 
         if (photonNum > 0)
         {

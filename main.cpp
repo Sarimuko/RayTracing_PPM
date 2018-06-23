@@ -16,6 +16,10 @@ int main() {
     //std::cout << "Hello, World!" << std::endl;
 
     Camera camera(12, 5, 3, -1, 0, 0, 5);
+    camera.applyDepth = true;
+    camera.focusD = 10;
+    camera.radius = 0.1;
+
     Scene scene;
 
 

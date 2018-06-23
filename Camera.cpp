@@ -34,7 +34,14 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
                 Ray ray = ProduceRay(leftDown + i * Dz * 0.01 + j * Dy * 0.01);
                 ray.rayType = 1;//视线光线
 
-                rtphoto(CONST::h - 1 - i, CONST::w - 1 - j) = scene.RayTracing(ray, 1, 0, i, j);
+                //rtphoto(CONST::h - 1 - i, CONST::w - 1 - j) =
+                if (applyDepth)
+                {
+                    for (int k=0;k < sample ;k ++)
+                        scene.RayTracing(ray, 1.0 / (double) sample, 0, i, j);
+                }
+                else
+                    scene.RayTracing(ray, 1, 0, i, j);
 
                 //photo(CONST::h - 1 - i, CONST::w - 1 - j) += color;
             }
@@ -83,13 +90,13 @@ cv::Mat Camera::CreatePhotoPT(Scene &scene)
     cv::Point3f yAxis = zAxis.cross(xAxis);
     yAxis = regu(yAxis);
 
-    cv::Point3f leftDown = photoCenter - CONST::w / 2 * yAxis * 0.1 - CONST::h / 2 * zAxis * 0.1;
+    cv::Point3f leftDown = photoCenter - CONST::w / 2 * yAxis * yscale - CONST::h / 2 * zAxis * xscale;
 
     for (int i=0;i<CONST::h;i++)
     {
         for (int j=0;j<CONST::w;j++)
         {
-            Ray ray = ProduceRay(leftDown + i * zAxis * 0.1 + j * yAxis * 0.1);
+            Ray ray = ProduceRay(leftDown + i * zAxis * xscale + j * yAxis * yscale);
             ray.rayType = 1;//视线光线
 
             cv::Vec3b color = scene.RayTracing(ray, 1, 0, i, j);
@@ -106,15 +113,40 @@ cv::Mat Camera::CreatePhotoPT(Scene &scene)
 
 Ray Camera::ProduceRay(cv::Point3d p)
 {
-    Ray ray;
-    ray.p0 = position;
-    ray.pd = p - position;
-    ray.pd = regu(ray.pd);
+    if (!applyDepth)
+    {
+        Ray ray;
+        ray.p0 = position;
+        ray.pd = p - position;
+        ray.pd = regu(ray.pd);
 
-    ray.intensity = 1;
-    ray.rayType = 0;//cameraRay
+        ray.intensity = 1;
+        ray.rayType = 1;//cameraRay
 
-    return ray;
+        return ray;
+    }
+    else
+    {
+        Ray ray;
+        double theta = rand() / (double)RAND_MAX * 2 * CONST::pi;
+
+        ray.p0 = position;
+        ray.p0 += radius * sin(theta) * Dy;
+        ray.p0 += radius * cos(theta) * Dz;
+
+        cv::Point3d hitpoint;
+        cv::Point3d photoCenter = position + fD * Dx;
+
+        hitpoint = position + Dx * focusD + focusD / fD * (p - photoCenter);
+        ray.pd = regu(hitpoint - ray.p0);
+
+        ray.intensity = 1.0 / (double) sample;
+        ray.rayType = 1;
+
+        return ray;
+
+    }
+
 
 }
 

@@ -10,21 +10,24 @@
 
 
 class Camera {
-private:
+public:
     cv::Point3d position;//摄像机位置
     cv::Point3d direction;//视线方向
 
     cv::Point3d Dx, Dy, Dz;
 
+    double xscale = 0.1, yscale = 0.1;//x, y两个方向的放缩系数
+
 
     double fD;//视平面距离
 
     bool applyDepth = false;//默认不使用景深
+    int sample = 2;//使用景深时的采样数量
 
     double focusD;//焦平面距离
     double radius;//光圈大小
 
-public:
+
     cv::Mat CreatePhoto(Scene& scene);//to do
     cv::Mat CreatePhotoPT(Scene& scene);//basic function
 
