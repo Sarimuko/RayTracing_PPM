@@ -36,3 +36,19 @@ void BoundingBox::explode()
         boundary[i * 2 + 1] += len * 0.1;
     }
 }
+
+bool BoundingBox::intersect(Ray ray)
+{
+    if (contains(ray.pd)) return true;
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 2; ++j) {
+            double val = boundary[i * 2 + j], t;
+            if (!sign(((cv::Vec3d)ray.pd)[i])) continue;
+            t = (val - ((cv::Vec3d)ray.p0)[i]) / ((cv::Vec3d)ray.pd)[i];
+            if (sign(t) < 0) continue;
+            if (contains(ray.p0 + t * ray.pd)) return true;
+        }
+    //res_false++;
+    //printf("%d %d %.3f\n", res_false, tot, res_false * 1.0 / tot);
+    return false;
+}

@@ -42,6 +42,10 @@ Hit Bezier::RayCast(Ray ray)
     Polynomial eq;
     std::vector<std::complex<double>> ts;
 
+    Hit hit;
+
+    if (!boundingBox.intersect(ray)) return hit;
+
     if (!sign(Pd.z)) {eq = (py - P.z); eq.roots(ts); }//防止溢出
     else {
         Polynomial nu = (py - P.z) / Pd.z;
@@ -50,7 +54,7 @@ Hit Bezier::RayCast(Ray ray)
     }//这里解出来的是beizier曲线的t
 
     double ans_t, ans_theta;
-    Hit hit;
+
     hit.t = CONST::INF;
 
     for (auto c: ts)//枚举所有的根
@@ -165,10 +169,12 @@ void Bezier::init()
     Dz.x = Dz.y = Dx.y = Dx.z = Dy.x = Dy.z = 0;
     Dz.z = Dx.x = Dy.y = 1;
 
-    /*for (auto point: controlPoints)
-    {
-        boundingBox.include()
-    }*/
+    std::cout << "Bezier points:\n";
+    for (float u = 0.0f, i = 0, du = 0.01; u <= 1.0f; u += du, i++) {
+        for (float v = 0.0f, j = 0, dv = 0.01; v <= 1.0f; v += dv, j++) {
+            boundingBox.include(getPoint(u, v * 2 * PI));
+        }
+    }
     //todo boundingbox
 
 

@@ -8,6 +8,7 @@
 
 //#include "Vector3.h"
 #include <opencv2/opencv.hpp>
+#include "Ray.h"
 
 class BoundingBox {
 public:
@@ -16,6 +17,8 @@ public:
     void include(cv::Vec3d p);
     void explode();
     bool contains(cv::Vec3d p) const;
+
+    bool intersect(Ray ray);
 
     //friend std::ostream &operator<<(std::ostream &os, const BoundingBox &box);
 };

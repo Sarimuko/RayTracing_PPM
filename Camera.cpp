@@ -43,7 +43,7 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
         int hitsize = scene.hits.size();
         for (int i=0;i < hitsize;i++)
         {
-            cv::Vec3d tmp = scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 1000;
+            cv::Vec3d tmp = scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 10000;
             photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[0] = min(tmp[0], 255);
             photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[1] = min(tmp[1], 255);
             photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[2] = min(tmp[2], 255);

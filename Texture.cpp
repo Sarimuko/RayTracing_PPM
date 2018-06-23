@@ -47,5 +47,5 @@ cv::Vec3b Texture::getColor(double x, double y) const
             int nx = std::min(int(x) + j, this->cols);
             res += (1 - fabs(y - ny)) * (1 - fabs(x - nx)) * (*this)[ny][nx];
         }
-    return res / 255;
+    return res;
 }

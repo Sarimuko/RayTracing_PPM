@@ -42,6 +42,14 @@ public:
     {
         id = -1;
     }
+
+    void loadTexture(std::string filename)
+    {
+        cv::Mat image = cv::imread(filename, 1);
+        //std::cout << image<<std::endl;
+        texture = image;
+    }
+
     virtual Hit RayCast(Ray ray) = 0;
     virtual bool Intersect(Ray ray) = 0;
     virtual cv::Vec3b getColor(cv::Point3d P) = 0;//获得颜色
@@ -81,15 +89,30 @@ private:
     cv::Point3d N;
     double D;//ax + by + cz + d = 0;
 
-    double ox, oy;//原点
+    cv::Point3d O;//原点
+    cv::Point3d Dx, Dy;
+
 
     double len_x, len_y;
 
 public:
-    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; ox = oy = 0.0; len_x = len_y = abs(D); D = d;isBackground = true; N = regu(N); reflectR = 0; rou_d = 0.3; spec = 0.3;}
+    Plane(double a, double b, double c, double d){N.x = a;N.y = b;N.z = c; O.x = O.y = O.z = 0.0; len_x = len_y = 10; D = d;isBackground = true; N = regu(N); reflectR = 0; rou_d = 0.3; spec = 0.3;}
+    Plane(cv::Point3d _O, cv::Point3d _Dx, cv::Point3d _Dy):O(_O), Dx(_Dx), Dy(_Dy)
+    {
+        N = _Dx.cross(_Dy);
+
+        N = regu(N);
+        len_x = len_y = 10;
+
+        D = -1 * (N.ddot(O));
+
+        reflectR = 0; rou_d = 0.3; spec = 0.3;
+
+    }
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
     cv::Vec3b getColor(cv::Point3d P);
+
 
 };
 

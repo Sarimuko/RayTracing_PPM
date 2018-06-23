@@ -122,7 +122,7 @@ cv::Vec3b Ball::getColor(cv::Point3d _P)
 {
     cv::Vec3b color;
 
-    cv::Point3d P = _P - centre;
+    cv::Point3d P = (_P - centre)/radius;
 
     if (texture.data == NULL)
     {
@@ -167,9 +167,11 @@ Hit Plane::RayCast(Ray ray)
     result.reflectCoefficience = reflectR;
     result.refractCoefficience = refractR;
 
-    result.r = r;
-    result.g = g;
-    result.b = b;
+    cv::Vec3b color = getColor(result.P);
+
+    result.r = color[0];
+    result.g = color[1];
+    result.b = color[2];
 
     return result;
 }
@@ -195,17 +197,23 @@ cv::Vec3b Plane::getColor(cv::Point3d P)
 
         return color;
     }
-    P.x -= ox;
-    P.y -= oy;
-    P.z = (- D - N.x * P.x - N.y * P.y) / N.z;
+
+    //std::cout<< "plane get color"<<std::endl;
+    /*P.x -= O.x;
+    P.y -= O.y;
+    P.z = (- D - N.x * P.x - N.y * P.y) / N.z;*/
+
+    P -= O;
 
 
-    double x = abs(P.x) / len_x, y = abs(P.y)/len_y;
+    double x = abs(P.ddot(Dx)) / len_x, y = abs(P.ddot(Dy))/len_y;
 
     while (x > 1)
         x -= 1;
     while (y > 1)
         y -= 1;
+
+    //std::cout << texture.getColor(x, y)<<std::endl;
 
     return texture.getColor(x, y);
 }

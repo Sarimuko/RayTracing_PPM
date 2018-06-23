@@ -4,6 +4,7 @@
 
 #ifndef RAYTRACING_CONST_H
 #define RAYTRACING_CONST_H
+#include <opencv2/opencv.hpp>
 
 
 
@@ -27,6 +28,7 @@ namespace CONST
     static double INF = 1e50;
 
     static int PHOTON_PER_ITER = 10000;
+
 }
 
 #endif //RAYTRACING_CONST_H
