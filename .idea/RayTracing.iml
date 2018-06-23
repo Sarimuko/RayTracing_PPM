@@ -20,9 +20,11 @@
       <sourceFolder url="file://$MODULE_DIR$/Bezier.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Object.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Camera.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/texture" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Light.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/const.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/matlab" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Kd_tree.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Bezier.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Camera.cpp" isTestSource="false" />

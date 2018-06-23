@@ -19,7 +19,7 @@ int main() {
     Scene scene;
 
 
-    Ball ball(3, 2, 1.5, 1.5, 0);
+    Ball ball(5, 5, 1.5, 1.5, 0);
     Ball ball_small(2, 8.9, 0.3, 0.3, 1);
 
     ball.r = 0;
@@ -88,10 +88,10 @@ int main() {
 
 
 
-    Light light(3, 9, 6, 0.7);
+    Light light(3, 9, 9, 1);
     scene.addLight(&light);
 
-    Light light2(3, 1, 6, 0.7);
+    Light light2(3, 1, 9, 1);
     scene.addLight(&light2);
 
     cv::Mat photo = camera.CreatePhoto(scene);

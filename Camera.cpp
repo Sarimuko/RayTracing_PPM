@@ -13,19 +13,25 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
     cv::Mat_<cv::Vec3b> photo(CONST::h, CONST::w, cv::Vec3b(0, 0, 0));
     cv::Mat_<cv::Vec3b> rtphoto(CONST::h, CONST::w, cv::Vec3b(0, 0, 0));
 
-    cv::Point3f photoCenter = position + fD * direction;
-    cv::Point3f zAxis(0, 0, 1);
-    cv::Point3f xAxis(direction);
-    cv::Point3f yAxis = zAxis.cross(xAxis);
-    yAxis = regu(yAxis);
+    cv::Point3d photoCenter = position + fD * direction;
 
-    cv::Point3f leftDown = photoCenter - CONST::w / 2 * yAxis * 0.01 - CONST::h / 2 * zAxis * 0.01;
+    cv::Point3d up(0, 0, 1);
+
+    Dx = regu(direction);
+    Dy = Dx.cross(up);
+    Dz = Dx.cross(Dy);
+
+    //cv::Point3f xAxis(direction);
+    //cv::Point3f yAxis = zAxis.cross(xAxis);
+    //yAxis = regu(yAxis);
+
+    cv::Point3d leftDown = photoCenter - CONST::w / 2 * Dy * 0.01 - CONST::h / 2 * Dz * 0.01;
 
         for (int i=0;i<CONST::h;i++)
         {
             for (int j=0;j<CONST::w;j++)
             {
-                Ray ray = ProduceRay(leftDown + i * zAxis * 0.01 + j * yAxis * 0.01);
+                Ray ray = ProduceRay(leftDown + i * Dz * 0.01 + j * Dy * 0.01);
                 ray.rayType = 1;//视线光线
 
                 rtphoto(CONST::h - 1 - i, CONST::w - 1 - j) = scene.RayTracing(ray, 1, 0, i, j);
@@ -44,9 +50,9 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
         for (int i=0;i < hitsize;i++)
         {
             cv::Vec3d tmp = scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 10000;
-            photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[0] = min(tmp[0], 255);
-            photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[1] = min(tmp[1], 255);
-            photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[2] = min(tmp[2], 255);
+            photo(scene.hits[i].px, scene.hits[i].py)[0] = min(tmp[0], 255);
+            photo(scene.hits[i].px, scene.hits[i].py)[1] = min(tmp[1], 255);
+            photo(scene.hits[i].px, scene.hits[i].py)[2] = min(tmp[2], 255);
             //if (tmp[0] != 0)
                 //std::cout << (int)photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[0] << std::endl;
         }

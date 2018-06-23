@@ -14,8 +14,15 @@ private:
     cv::Point3d position;//摄像机位置
     cv::Point3d direction;//视线方向
 
+    cv::Point3d Dx, Dy, Dz;
+
 
     double fD;//视平面距离
+
+    bool applyDepth = false;//默认不使用景深
+
+    double focusD;//焦平面距离
+    double radius;//光圈大小
 
 public:
     cv::Mat CreatePhoto(Scene& scene);//to do
