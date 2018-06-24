@@ -114,10 +114,6 @@ static cv::Point3d getRefract(cv::Point3d origin, double n0, double n1, cv::Poin
     cv::Point3d i = z.cross(N);
     cv::Point3d rN = regu(origin + i * sin0);
 
-
-
-
-
     rd = rN - i * sin1/(sqrt(1 - sin1 * sin1));
     rd = regu(rd);
 

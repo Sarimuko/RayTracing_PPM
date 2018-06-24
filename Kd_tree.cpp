@@ -66,8 +66,7 @@ std::vector<Hit> Kd_tree::findRange( Node *root, Hit target, double range)
     if(dist_sq <= range && ((root -> data.P - target.P).ddot(target.N)) < 0.1 * range) {//将范围内的近邻添加到结果向量res_nearest中
         //std::pair<_Examplar,double> temp(root->getDomElt(), dist_sq);
         ans.push_back(root -> data);
-        //结果个数+1
-        //added_res = 1;
+
     }
 
     //std::cout << (root -> data == NULL)<<std::endl;

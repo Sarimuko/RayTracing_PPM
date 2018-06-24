@@ -20,8 +20,6 @@ Ray Light::getRay(cv::Point3d p)
     return ray;
 }
 
-
-
 Ray Light::randomRay()
 {
     Ray ray;
@@ -34,7 +32,6 @@ Ray Light::randomRay()
         y = 2. * randreal() - 1;
         z = 2. * randreal() - 1;
     } while (x*x+y*y+z*z>1 || x*x+y*y+z*z < CONST::EPS);
-    //return Vector3(x, y, z).normalized();
 
     ray.pd.x = x;
     ray.pd.y = y;
@@ -43,7 +40,6 @@ Ray Light::randomRay()
     ray.intensity = intensity;
 
     ray.pd = regu(ray.pd);
-
 
     ray.intensity = intensity;
 

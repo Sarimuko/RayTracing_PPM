@@ -5,7 +5,7 @@
 #include "Scene.h"
 #include "const.h"
 #include <limits.h>
-//#include <omp.h>
+#include <omp.h>
 
 bool Scene::intersect(Ray ray)
 {
@@ -213,12 +213,14 @@ void Scene::processPhotons()
     tree.create(photonHits);
 
     int size = hits.size();
+
+#pragma omp parallel for num_threads(4) schedule(dynamic, 40000)
     for (int i=0;i< size;i++)
     {
 
         if (i % 10000 == 0)
         {
-            std::cout << i<<std::endl;
+            std::cout << omp_get_thread_num() << " "<< i<<std::endl;
         }
         std::vector<Hit> photons = tree.findRange(hits[i], hits[i].radius);
         int photonNum = photons.size();

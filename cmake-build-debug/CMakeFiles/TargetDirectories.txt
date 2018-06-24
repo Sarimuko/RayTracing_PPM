@@ -1,0 +1,3 @@
+/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir

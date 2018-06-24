@@ -38,7 +38,7 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
                 if (applyDepth)
                 {
                     for (int k=0;k < sample ;k ++)
-                        scene.RayTracing(ray, 1.0 / (double) sample, 0, i, j);
+                        scene.RayTracing(ray, 1.0, 0, i, j);
                 }
                 else
                     scene.RayTracing(ray, 1, 0, i, j);
@@ -52,21 +52,23 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
     for (int iter = 0;iter < 1000; iter ++)
     {
         scene.shootPhoton(CONST::PHOTON_PER_ITER);
+        cv::Mat3d tmp(photo.rows, photo.cols, cv::Vec3d(0, 0, 0));
+
+
 
         int hitsize = scene.hits.size();
         for (int i=0;i < hitsize;i++)
         {
-            cv::Vec3d tmp = scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 10000;
-            photo(scene.hits[i].px, scene.hits[i].py)[0] = min(tmp[0], 255);
-            photo(scene.hits[i].px, scene.hits[i].py)[1] = min(tmp[1], 255);
-            photo(scene.hits[i].px, scene.hits[i].py)[2] = min(tmp[2], 255);
+            tmp(scene.hits[i].px, scene.hits[i].py) = tmp(scene.hits[i].px, scene.hits[i].py) + scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 38000;
+            /*photo(scene.hits[i].px, scene.hits[i].py)[0] = min(photo(scene.hits[i].px, scene.hits[i].py)[0] + tmp[0], 255);
+            photo(scene.hits[i].px, scene.hits[i].py)[1] = min(photo(scene.hits[i].px, scene.hits[i].py)[1] + tmp[1], 255);
+            photo(scene.hits[i].px, scene.hits[i].py)[2] = min(photo(scene.hits[i].px, scene.hits[i].py)[2] + tmp[2], 255);*/
             //if (tmp[0] != 0)
                 //std::cout << (int)photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[0] << std::endl;
         }
 
+        photo = min(tmp/sample, 255);
 
-            //cv::imshow("test", photo);
-            //cv::waitKey();
             cv::imwrite("/Users/wangyihan/Desktop/ComputerGraphics__.png",photo);
             std:: cout << iter<<std::endl;
 
@@ -140,7 +142,7 @@ Ray Camera::ProduceRay(cv::Point3d p)
         hitpoint = position + Dx * focusD + focusD / fD * (p - photoCenter);
         ray.pd = regu(hitpoint - ray.p0);
 
-        ray.intensity = 1.0 / (double) sample;
+        ray.intensity = 1.0;
         ray.rayType = 1;
 
         return ray;

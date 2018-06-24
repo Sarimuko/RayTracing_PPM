@@ -22,7 +22,7 @@ public:
     double fD;//视平面距离
 
     bool applyDepth = false;//默认不使用景深
-    int sample = 2;//使用景深时的采样数量
+    int sample = 32;//使用景深时的采样数量
 
     double focusD;//焦平面距离
     double radius;//光圈大小
