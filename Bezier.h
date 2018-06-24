@@ -26,6 +26,7 @@ public:
 
 
     cv::Vec3b getColor(cv::Point3d P);
+    cv::Vec3b getColor(double t, double theta);
     cv::Point3d getPoint(double t, double theta);//得到某个点的坐标
     cv::Point2d getCurve(double t);//得到曲线的坐标（割平面）
     std::pair<Polynomial, Polynomial> P2d(int l, int n);

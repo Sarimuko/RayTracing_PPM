@@ -27,7 +27,7 @@ namespace CONST
     static double EPS = 1e-5;
     static double INF = 1e50;
 
-    static int PHOTON_PER_ITER = 100000;
+    static int PHOTON_PER_ITER = 10000;
 
 }
 

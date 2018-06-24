@@ -85,8 +85,8 @@ Hit Bezier::RayCast(Ray ray)
             if (sign(d - r * r) > 0)//没有交点
                 continue;
 
-            cv::Point3d ll = center - hit.P;
-            if (sign(hit.Pd.ddot(ll)) <= 0)
+            cv::Point3d ll = center - new_ray.p0;
+            if (sign(ray.pd.ddot(ll)) <= 0)
                 continue;
 
             double l = P.x * P.x + P.y * P.y;
@@ -129,9 +129,19 @@ Hit Bezier::RayCast(Ray ray)
         hit.reflectCoefficience = reflectR;
         hit.refractCoefficience = refractR;
 
-        hit.r = r;
-        hit.g = g;
-        hit.b = b;
+        cv::Point3d nP = new_ray.p0 + new_ray.pd * hit.t;
+        double px_v = px(ans_t);
+
+        if (!sign(nP.x) && !sign(nP.y)) ans_theta = 0;
+        else {
+            ans_theta = atan2(nP.y, nP.x) + PI*(px_v < 0);
+            if (ans_theta > PI) ans_theta -= 2 * PI;
+        }
+
+        cv::Vec3b color = getColor(ans_t, ans_theta);
+        hit.r = color[0];
+        hit.g = color[1];
+        hit.b = color[2];
 
 
         hit.spec = spec;
@@ -199,4 +209,20 @@ cv::Vec3b Bezier::getColor(cv::Point3d P)
         return color;
     }
     return color;
+}
+
+cv::Vec3b Bezier::getColor(double t, double theta)
+{
+    cv::Vec3b color;
+    if (texture.data == NULL)
+    {
+        color[0] = r;
+        color[1] = g;
+        color[2] = b;
+
+        return color;
+    }
+    double x = t, y = theta / PI / 2 + 0.5;
+
+    return texture.getColor(x, y);
 }

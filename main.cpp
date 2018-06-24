@@ -66,15 +66,17 @@ int main() {
     test.origin.y = 8;
     test.origin.z = 0;
 
-    cv::Point2d p1(2.92 / 5, 0.42 / 5);
-    cv::Point2d p2(3.25 / 5, 1.66 / 5);
-    cv::Point2d p3(2.75 / 5, 2.81 / 5);
-    cv::Point2d p4(2.69 / 5, 4.06 / 5);
+    cv::Point2d p1(19.2 / 5, 4.2 / 5);
+    cv::Point2d p2(22.5 / 5, 16.6 / 5);
+    cv::Point2d p3(17.5 / 5, 28.1 / 5);
+    cv::Point2d p4(16.9 / 5, 40.6 / 5);
 
     test.controlPoints.push_back(p1);
     test.controlPoints.push_back(p2);
     test.controlPoints.push_back(p3);
     test.controlPoints.push_back(p4);
+
+    test.loadTexture("/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/texture/porcelain.jpg");
 
     test.init();
 
