@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Camera.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Camera.cpp.o"
   "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Kd_tree.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Kd_tree.cpp.o"
   "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Light.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Light.cpp.o"
+  "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Mesh.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Mesh.cpp.o"
   "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Object.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Object.cpp.o"
   "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Polynomial.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Polynomial.cpp.o"
   "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Ray.cpp" "/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/cmake-build-debug/CMakeFiles/RayTracing.dir/Ray.cpp.o"

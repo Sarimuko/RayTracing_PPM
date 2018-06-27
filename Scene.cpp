@@ -192,7 +192,7 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
     return color;
 }
 
-void Scene::updateHit()
+/*void Scene::updateHit()
 {
     int hitsize = hits.size();
     for (int i=0; i < hitsize; i ++)
@@ -206,7 +206,7 @@ void Scene::updateHit()
         hits[i].cnt = hits[i].cnt + (int)(CONST::a * hits[i].ncnt);
         hits[i].ncnt = 0;
     }
-}
+}*/
 
 void Scene::processPhotons()
 {
@@ -231,7 +231,7 @@ void Scene::processPhotons()
         {
 
             double inten = 0.0;
-            inten += photons[j].RI;
+            inten = Phong(photons[j], hits[i], CONST::s);
             //std::cout << "photon inten: "<<inten<<std::endl;
 
             color[2] += (double)hits[i].r * inten;

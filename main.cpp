@@ -46,15 +46,15 @@ int main() {
     front.g = 182;
     front.b = 193;
 
-    Plane left(0, 1, 0, 0);
+    Plane left(0, 1, 0, 100);
     left.r = 255, left.g = 215, left.b = 0;
 
-    Plane right(0, 1, 0, -10);
+    Plane right(0, 1, 0, -100);
     right.r = 255, right.g = 215, right.b = 0;
     Plane down(O, Dx, Dy);
     down.r = 255, down.g = 215, down.b = 0;
     down.loadTexture("/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/texture/floor.bmp");
-    Plane up(0, 0, 1, -10);
+    Plane up(0, 0, 1, -100);
     up.r = 255, up.g = 215, up.b = 0;
 
     Bezier test;
@@ -66,17 +66,23 @@ int main() {
     test.origin.y = 8;
     test.origin.z = 0;
 
-    cv::Point2d p1(19.2 / 5, 4.2 / 5);
-    cv::Point2d p2(22.5 / 5, 16.6 / 5);
-    cv::Point2d p3(17.5 / 5, 28.1 / 5);
-    cv::Point2d p4(16.9 / 5, 40.6 / 5);
+    test.r = test.g = test.b = 255;
+
+    cv::Point2d p1(3.31, 132.74);
+    cv::Point2d p2(9.14, 96.01);
+    cv::Point2d p3(20.34, 66.89);
+    cv::Point2d p4(20.44, 54.8);
+    cv::Point2d p5(12.08, 0.0);
 
     test.controlPoints.push_back(p1);
     test.controlPoints.push_back(p2);
     test.controlPoints.push_back(p3);
     test.controlPoints.push_back(p4);
+    test.controlPoints.push_back(p5);
 
-    test.loadTexture("/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/texture/porcelain.jpg");
+    test.scale = 30;
+
+    //test.loadTexture("/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/texture/porcelain.jpg");
 
     test.init();
 
@@ -94,10 +100,10 @@ int main() {
 
 
 
-    Light light(3, 9, 9, 1);
+    Light light(8, 9, 12, 1);
     scene.addLight(&light);
 
-    Light light2(3, 1, 9, 1);
+    Light light2(8, 1, 12, 1);
     scene.addLight(&light2);
 
     cv::Mat photo = camera.CreatePhoto(scene);

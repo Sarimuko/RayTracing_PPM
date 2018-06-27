@@ -116,6 +116,12 @@
 		<Unit filename="/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Light.h">
 			<Option target="RayTracing"/>
 		</Unit>
+		<Unit filename="/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Mesh.cpp">
+			<Option target="RayTracing"/>
+		</Unit>
+		<Unit filename="/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Mesh.h">
+			<Option target="RayTracing"/>
+		</Unit>
 		<Unit filename="/Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Object.cpp">
 			<Option target="RayTracing"/>
 		</Unit>

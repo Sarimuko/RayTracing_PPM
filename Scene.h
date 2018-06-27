@@ -40,7 +40,7 @@ public:
     Hit firstIntersect(Ray ray);//返回第一个交点的信息
 
     std::vector<Hit> getLightRay(cv::Point3d P, cv::Point3d N);//得到和光线的交点信息
-    void updateHit();
+    //void updateHit();
 
     void processPhotons();
 };

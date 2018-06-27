@@ -99,7 +99,7 @@ bool Ball::Intersect(Ray ray)
     if (norm(l) < radius)
         inBall = true;
 
-    double tp = ray.pd.ddot((cv::Point3f)l);
+    double tp = ray.pd.ddot((cv::Point3d)l);
     if (tp < 0)
     {
         intersect = false;

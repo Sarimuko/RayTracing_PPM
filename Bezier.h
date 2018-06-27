@@ -22,6 +22,8 @@ public:
 
     cv::Point3d Dz, Dx, Dy;
 
+    double scale;
+
     Polynomial px, py, pz, dpx, dpy;
 
 

@@ -52,7 +52,7 @@ public:
 
     virtual Hit RayCast(Ray ray) = 0;
     virtual bool Intersect(Ray ray) = 0;
-    virtual cv::Vec3b getColor(cv::Point3d P) = 0;//获得颜色
+    virtual cv::Vec3b getColor(cv::Point3d P){return cv::Vec3b(0, 0, 0);};//获得颜色
 
     virtual void Translate(cv::Point3f direction){}//平移
     virtual void RotateX(cv::Point3f c, double theta){}

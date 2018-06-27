@@ -128,6 +128,7 @@ Hit Bezier::RayCast(Ray ray)
         hit.deffuseR = rou_d;
         hit.reflectCoefficience = reflectR;
         hit.refractCoefficience = refractR;
+        hit.spec = spec;
 
         cv::Point3d nP = new_ray.p0 + new_ray.pd * hit.t;
         double px_v = px(ans_t);
@@ -162,7 +163,7 @@ bool Bezier::Intersect(Ray ray)
 std::pair<Polynomial, Polynomial> Bezier::P2d(int l, int n)
 {
     if (n == 1)
-        return std::pair<Polynomial, Polynomial>(controlPoints[l].x, controlPoints[l].y);
+        return std::pair<Polynomial, Polynomial>(controlPoints[l].x/scale, controlPoints[l].y/scale);
     std::pair<Polynomial, Polynomial> lhs = P2d(l, n - 1), rhs = P2d(l + 1, n - 1);
     return std::pair<Polynomial, Polynomial>(Polynomial(1, -1) * lhs.first  + Polynomial(0, 1) * rhs.first,
                                              Polynomial(1, -1) * lhs.second + Polynomial(0, 1) * rhs.second);
@@ -224,5 +225,5 @@ cv::Vec3b Bezier::getColor(double t, double theta)
     }
     double x = t, y = theta / PI / 2 + 0.5;
 
-    return texture.getColor(x, y);
+    return texture.getColor(y, x);
 }

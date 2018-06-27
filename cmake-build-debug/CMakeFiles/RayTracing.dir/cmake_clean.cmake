@@ -10,6 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/RayTracing.dir/Polynomial.cpp.o"
   "CMakeFiles/RayTracing.dir/BoundingBox.cpp.o"
   "CMakeFiles/RayTracing.dir/Texture.cpp.o"
+  "CMakeFiles/RayTracing.dir/Mesh.cpp.o"
   "RayTracing.pdb"
   "RayTracing"
 )
