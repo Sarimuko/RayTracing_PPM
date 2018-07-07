@@ -258,33 +258,6 @@ Light.cpp.s:
 	$(MAKE) -f CMakeFiles/RayTracing.dir/build.make CMakeFiles/RayTracing.dir/Light.cpp.s
 .PHONY : Light.cpp.s
 
-Mesh.o: Mesh.cpp.o
-
-.PHONY : Mesh.o
-
-# target to build an object file
-Mesh.cpp.o:
-	$(MAKE) -f CMakeFiles/RayTracing.dir/build.make CMakeFiles/RayTracing.dir/Mesh.cpp.o
-.PHONY : Mesh.cpp.o
-
-Mesh.i: Mesh.cpp.i
-
-.PHONY : Mesh.i
-
-# target to preprocess a source file
-Mesh.cpp.i:
-	$(MAKE) -f CMakeFiles/RayTracing.dir/build.make CMakeFiles/RayTracing.dir/Mesh.cpp.i
-.PHONY : Mesh.cpp.i
-
-Mesh.s: Mesh.cpp.s
-
-.PHONY : Mesh.s
-
-# target to generate assembly for a file
-Mesh.cpp.s:
-	$(MAKE) -f CMakeFiles/RayTracing.dir/build.make CMakeFiles/RayTracing.dir/Mesh.cpp.s
-.PHONY : Mesh.cpp.s
-
 Object.o: Object.cpp.o
 
 .PHONY : Object.o
@@ -471,9 +444,6 @@ help:
 	@echo "... Light.o"
 	@echo "... Light.i"
 	@echo "... Light.s"
-	@echo "... Mesh.o"
-	@echo "... Mesh.i"
-	@echo "... Mesh.s"
 	@echo "... Object.o"
 	@echo "... Object.i"
 	@echo "... Object.s"

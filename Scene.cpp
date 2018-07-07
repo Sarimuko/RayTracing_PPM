@@ -33,8 +33,6 @@ Hit Scene::firstIntersect(Ray ray)
         }
     }
 
-    //std::cout << "size of hits: "<<hits.size()<<std::endl;
-
     int hitSize = hits.size();
     double min_t = hits[0].t;
     Hit min_Hit = hits[0];
@@ -53,7 +51,6 @@ Hit Scene::firstIntersect(Ray ray)
 
 std::vector<Hit> Scene::getLightRay(cv::Point3d P, cv::Point3d N)
 {
-    //std::cout << "getLightRay"<<std::endl;
     std::vector<Hit> ans;
     int size = lights.size();
     for (int i=0;i<size;i++)
@@ -131,13 +128,9 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
     {
         double inten = 0.0;
 
-        //std::vector<Hit> LightHits = getLightRay(hit.P, hit.N);
-
         hit.RI = coefficient;//加上权重信息
         hit.px = x;
         hit.py = y;
-
-        //std::cout << hit.P<<hit.RI << std::endl;
 
         addHit(hit);
 
@@ -169,7 +162,6 @@ cv::Vec3b Scene::RayTracing(Ray& ray, double coefficient, int iter, int x, int y
             double rate = rand() / (double)RAND_MAX;
             if (rate < hit.deffuseR)
             {
-                //if (iter > 0)//只存间接光照
                 photonHits.push_back(hit);
             }
             else if (rate - hit.deffuseR < hit.reflectCoefficience && iter < CONST::MAX_ITER)
@@ -232,15 +224,12 @@ void Scene::processPhotons()
 
             double inten = 0.0;
             inten = Phong(photons[j], hits[i], CONST::s);
-            //std::cout << "photon inten: "<<inten<<std::endl;
 
             color[2] += (double)hits[i].r * inten;
             color[1] += (double)hits[i].g * inten;
             color[0] += (double)hits[i].b * inten;
 
         }
-
-        //std::cout << color<<std::endl;
 
         if (photonNum > 0)
         {
@@ -253,20 +242,10 @@ void Scene::processPhotons()
             {
                 double rate = (hits[i].cnt + CONST::a * photonNum)/(hits[i].cnt + photonNum);//改变半径的系数
                 hits[i].radius = hits[i].radius * sqrt(rate);
-                //std::cout << hits[i].radius<<std::endl;
-
                 hits[i].color = (hits[i].color + color) * rate;
-
-
                 hits[i].cnt = hits[i].cnt + (int)(CONST::a * photonNum);
             }
-
         }
-
-
-
-
     }
-
     photonHits.clear();
 }

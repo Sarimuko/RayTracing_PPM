@@ -10,8 +10,6 @@ Hit Ball::RayCast(Ray ray)
     Hit result;
 
     bool inBall = false;
-    bool intersect = false;
-    bool approach = false;
 
     double d2;
 
@@ -22,7 +20,6 @@ Hit Ball::RayCast(Ray ray)
     double tp = ray.pd.ddot((cv::Point3d)l);
     if (tp < 0)
     {
-        intersect = false;
         return result;
     }
     else
@@ -30,7 +27,6 @@ Hit Ball::RayCast(Ray ray)
         d2 = (norm(l)) * (norm(l)) - tp * tp;
         if (sign(d2 - radius * radius) >= 0)
         {
-            intersect = false;
             return result;
         }
     }
@@ -46,7 +42,6 @@ Hit Ball::RayCast(Ray ray)
         t = tp - tprime;
     }
 
-    //cv::Point3f NP = ray.p0 + t * ray.pd;
     result.valid = true;
 
     result.t = t;
@@ -76,8 +71,6 @@ Hit Ball::RayCast(Ray ray)
     result.deffuseR = rou_d;
     result.spec = spec;
 
-    //std::cout << "ball intersect: "<<ray.p0 << ' '<<ray.pd<<' '<<result.P<<std::endl;
-
     return result;
 
 
@@ -89,20 +82,13 @@ bool Ball::Intersect(Ray ray)
 {
     Hit result;
 
-    bool inBall = false;
-    bool intersect = false;
-    bool approach = false;
-
     double d2;
 
     cv::Vec3d l = centre - ray.p0;
-    if (norm(l) < radius)
-        inBall = true;
 
     double tp = ray.pd.ddot((cv::Point3d)l);
     if (tp < 0)
     {
-        intersect = false;
         return false;
     }
     else
@@ -110,7 +96,6 @@ bool Ball::Intersect(Ray ray)
         d2 = (norm(l)) * (norm(l)) - tp * tp;
         if (d2 > radius * radius)
         {
-            intersect = false;
             return false;
         }
     }
@@ -138,7 +123,6 @@ cv::Vec3b Ball::getColor(cv::Point3d _P)
     else x = atan2(P.y, P.x)/2/PI + 0.5, y = asin(P.z) / PI + 0.5;
 
     return texture.getColor(x, y);
-    //cv::Point3d PP = P - centre;
 }
 
 Hit Plane::RayCast(Ray ray)
@@ -151,7 +135,12 @@ Hit Plane::RayCast(Ray ray)
         return result;
     }
 
-    //std::cout << "t: "<<t <<std::endl;
+    cv::Point3d hitPoint = ray.p0 + t * ray.pd - O;
+    if (hasBorder && (hitPoint.ddot(Dx) <= 0 || hitPoint.ddot(Dx) > len_x || hitPoint.ddot(Dy) <= 0 || hitPoint.ddot(Dy) > len_y))
+    {
+        result.valid = false;
+        return result;
+    }
 
     result.valid = true;
     result.t = t;
@@ -198,13 +187,7 @@ cv::Vec3b Plane::getColor(cv::Point3d P)
         return color;
     }
 
-    //std::cout<< "plane get color"<<std::endl;
-    /*P.x -= O.x;
-    P.y -= O.y;
-    P.z = (- D - N.x * P.x - N.y * P.y) / N.z;*/
-
     P -= O;
-
 
     double x = abs(P.ddot(Dx)) / len_x, y = abs(P.ddot(Dy))/len_y;
 
@@ -212,8 +195,6 @@ cv::Vec3b Plane::getColor(cv::Point3d P)
         x -= 1;
     while (y > 1)
         y -= 1;
-
-    //std::cout << texture.getColor(x, y)<<std::endl;
 
     return texture.getColor(x, y);
 }

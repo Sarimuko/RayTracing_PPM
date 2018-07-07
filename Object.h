@@ -25,16 +25,10 @@ public:
     double rou_d = 0;//diffusion
 
     //bool  transparent = false;
-    double n = 1.5;//光线的 折射率
+    double n = 1.6;//光线的 折射率
     double refractR = 0;//refraction rate折射率
     double reflectR = 1.0;//反射率
     double spec = 0;
-
-    cv::Vec3d color;
-
-    //int texture = 0;//id of texture
-
-
 
     double r = 23, g = 123, b = 17;//物体固有颜色
 
@@ -54,12 +48,6 @@ public:
     virtual bool Intersect(Ray ray) = 0;
     virtual cv::Vec3b getColor(cv::Point3d P){return cv::Vec3b(0, 0, 0);};//获得颜色
 
-    virtual void Translate(cv::Point3f direction){}//平移
-    virtual void RotateX(cv::Point3f c, double theta){}
-    virtual void RotateY(cv::Point3f c, double theta){}
-    virtual void RotateZ(cv::Point3f c, double theta){}
-
-    virtual void Rotate(cv::Point3f c, cv::Point3f axis, double theta){}//旋转
 };
 
 class Ball: public Object
@@ -85,7 +73,9 @@ public:
 
 class Plane: public Object
 {
-private:
+public:
+    bool hasBorder = false;
+
     cv::Point3d N;
     double D;//ax + by + cz + d = 0;
 
@@ -106,14 +96,12 @@ public:
 
         D = -1 * (N.ddot(O));
 
-        reflectR = 0; rou_d = 0.3; spec = 0.3;
+        reflectR = 0; rou_d = 0.2; spec = 0.4;
 
     }
     Hit RayCast(Ray ray);
     bool Intersect(Ray ray);
     cv::Vec3b getColor(cv::Point3d P);
-
-
 };
 
 

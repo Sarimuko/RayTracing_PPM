@@ -12,15 +12,12 @@
 
 class BoundingBox {
 public:
-    double boundary[6]; // lx rx ly ry lz rz
+    double boundary[6];
     BoundingBox();
     void include(cv::Vec3d p);
-    void explode();
     bool contains(cv::Vec3d p) const;
 
     bool intersect(Ray ray);
-
-    //friend std::ostream &operator<<(std::ostream &os, const BoundingBox &box);
 };
 
 

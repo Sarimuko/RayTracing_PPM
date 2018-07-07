@@ -12,10 +12,6 @@ CMakeFiles/RayTracing.dir/Bezier.cpp.o
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Ray.h
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Texture.h
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/const.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/main.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/rt_nonfinite.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/rtwtypes.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/solve_bezier_types.h
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h
@@ -836,10 +832,6 @@ CMakeFiles/RayTracing.dir/Polynomial.cpp.o
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Polynomial.cpp
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Polynomial.h
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/const.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/main.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/rt_nonfinite.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/rtwtypes.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/solve_bezier_types.h
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h
@@ -1395,10 +1387,6 @@ CMakeFiles/RayTracing.dir/main.cpp.o
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/Texture.h
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/const.h
  /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/main.cpp
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/main.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/rt_nonfinite.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/rtwtypes.h
- /Users/wangyihan/Desktop/ComputerGraphics/RayTracing/matlab/solve_bezier_types.h
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp
  /usr/local/include/opencv2/calib3d/calib3d_c.h

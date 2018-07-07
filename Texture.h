@@ -14,12 +14,12 @@ public:
     Texture(const cv::Mat &mat);
     Texture();
     Texture& operator=(const cv::Mat &mat);
-    cv::Vec3b* operator[](int idx)const{return data + idx * cols;}
+    cv::Vec3b* operator[](int idx)const{return data + idx * w;}
     cv::Vec3b getColor(double x, double y) const;
 
     virtual ~Texture();
 
-    int rows, cols;
+    int w, h;
 };
 
 

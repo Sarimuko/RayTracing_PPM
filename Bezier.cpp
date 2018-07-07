@@ -34,32 +34,29 @@ Hit Bezier::RayCast(Ray ray)
 
     cv::Point3d P = ray.p0 - origin;
     cv::Point3d Pd = ray.pd;
-    //O = O.transformedToNewAxis(Dx, Dy, Dz);
+
     Ray new_ray(P, Pd);
-    //Solve t,u in the equations
-    // P(t).x^2 = (P.x+u*Pd.x)^2 + (P.y+u*Pd.y)^2
-    // P(t).y   = P.z + u*Pd.z;
+
     Polynomial eq;
-    std::vector<std::complex<double>> ts;
+    std::vector<std::complex<double>> roots;
 
     Hit hit;
 
     if (!boundingBox.intersect(ray)) return hit;
 
-    if (!sign(Pd.z)) {eq = (py - P.z); eq.roots(ts); }//防止溢出
+    if (!sign(Pd.z)) {eq = (py - P.z); eq.roots(roots); }//防止溢出
     else {
         Polynomial nu = (py - P.z) / Pd.z;
         eq = pow(px, 2) - pow(P.x + nu * Pd.x, 2) - pow(P.y + nu * Pd.y, 2);
-        eq.roots(ts);
+        eq.roots(roots);
     }//这里解出来的是beizier曲线的t
 
     double ans_t, ans_theta;
 
     hit.t = CONST::INF;
 
-    for (auto c: ts)//枚举所有的根
+    for (auto c: roots)//枚举所有的根
     {
-        //std::cout << c<<std::endl;
         if (sign(c.imag()))//虚根，舍掉
             continue;
 
@@ -67,13 +64,13 @@ Hit Bezier::RayCast(Ray ray)
         if (sign(t - 1) > 0 || sign(t) < 0)//超出范围的根，舍掉
             continue;
 
-        t = max(0., min(1, t));//将根划归到0，1区间
+        t = max(0, min(1, t));//将根划归到0，1区间
 
-        double u;
+        double tt;
 
         if (sign(Pd.z))
         {
-            u = (py(t) - P.z)/Pd.z;
+            tt = (py(t) - P.z)/Pd.z;
         }
         else
         {
@@ -92,16 +89,16 @@ Hit Bezier::RayCast(Ray ray)
             double l = P.x * P.x + P.y * P.y;
 
             //std::cout << "l: "<<l<<std::endl;
-            double u0 = sqrt(l - d);
-            double u1 = sqrt(r * r - d);
+            double t0 = sqrt(l - d);
+            double t1 = sqrt(r * r - d);
 
-            u = u0 - u1;
+            tt = t0 - t1;
 
         }
 
-        if (sign(u) > 0 && u < hit.t)
+        if (sign(tt) > 0 && tt < hit.t)
         {
-            hit.t = u;
+            hit.t = tt;
             ans_t = t;
         }
 
@@ -118,8 +115,6 @@ Hit Bezier::RayCast(Ray ray)
         cv::Point3d X(hit.P.x - origin.x, hit.P.y - origin.y, 0);
         X = regu(X);
 
-        //std::cout << X<<std::endl;
-
         hit.N = dpy(ans_t) * X - dpx(ans_t) * Z;
         hit.N = regu(hit.N);
 
@@ -129,6 +124,8 @@ Hit Bezier::RayCast(Ray ray)
         hit.reflectCoefficience = reflectR;
         hit.refractCoefficience = refractR;
         hit.spec = spec;
+
+        hit.n0 = hit.n1 = 1;
 
         cv::Point3d nP = new_ray.p0 + new_ray.pd * hit.t;
         double px_v = px(ans_t);
@@ -146,8 +143,6 @@ Hit Bezier::RayCast(Ray ray)
 
 
         hit.spec = spec;
-        //std::cout << hit.N<<hit.P<<hit.Pd<<hit.Rd;
-
     }
 
     return hit;
@@ -160,20 +155,20 @@ bool Bezier::Intersect(Ray ray)
     return hit.valid;
 }
 
-std::pair<Polynomial, Polynomial> Bezier::P2d(int l, int n)
+std::pair<Polynomial, Polynomial> Bezier::getP(int l, int n)
 {
     if (n == 1)
         return std::pair<Polynomial, Polynomial>(controlPoints[l].x/scale, controlPoints[l].y/scale);
-    std::pair<Polynomial, Polynomial> lhs = P2d(l, n - 1), rhs = P2d(l + 1, n - 1);
-    return std::pair<Polynomial, Polynomial>(Polynomial(1, -1) * lhs.first  + Polynomial(0, 1) * rhs.first,
-                                             Polynomial(1, -1) * lhs.second + Polynomial(0, 1) * rhs.second);
+    std::pair<Polynomial, Polynomial> p1 = getP(l, n - 1), p2 = getP(l + 1, n - 1);
+    return std::pair<Polynomial, Polynomial>(Polynomial(1, -1) * p1.first  + Polynomial(0, 1) * p2.first,
+                                             Polynomial(1, -1) * p1.second + Polynomial(0, 1) * p2.second);
 }
 
 void Bezier::init()
 {
     printf("initializing Bezier\n");
 
-    std::pair<Polynomial, Polynomial> tmp = P2d(0, controlPoints.size());
+    std::pair<Polynomial, Polynomial> tmp = getP(0, controlPoints.size());
     px = tmp.first; py = tmp.second;
     dpx = px.derivative(); dpy = py.derivative();
 
@@ -186,16 +181,7 @@ void Bezier::init()
             boundingBox.include(getPoint(u, v * 2 * PI));
         }
     }
-    //todo boundingbox
 
-
-    /*printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 0., 0., getPoint(0., 0.).x, getPoint(0., 0.).y, getPoint(0., 0.).z);
-    printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 0.5, 0.5 * CONST::pi, getPoint(0.5, 0.5 * CONST::pi).x, getPoint(0.5, 0.5 * CONST::pi).y, getPoint(0.5, 0.5 * CONST::pi).z);
-    printf("Test for Bezier: P(%.3f, %.3f)=(%.3f, %.3f, %.3f)\n", 1, 0., getPoint(0., 0.).x, getPoint(0., 0.).y, getPoint(0., 0.).z);*/
-    //printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 0.5, px(0.5), py(0.5));
-    //printf("Test for Bezier: P(%.3f)=(%.3f, %.3f)\n", 1., px(1), py(1));
-
-    //std::cout << bbox << std::endl;
 }
 
 cv::Vec3b Bezier::getColor(cv::Point3d P)

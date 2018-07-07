@@ -21,20 +21,15 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
     Dy = Dx.cross(up);
     Dz = Dx.cross(Dy);
 
-    //cv::Point3f xAxis(direction);
-    //cv::Point3f yAxis = zAxis.cross(xAxis);
-    //yAxis = regu(yAxis);
-
-    cv::Point3d leftDown = photoCenter - CONST::w / 2 * Dy * 0.01 - CONST::h / 2 * Dz * 0.01;
+    cv::Point3d leftDown = photoCenter - CONST::w / 2 * Dy * yscale - CONST::h / 2 * Dz * xscale;
 
         for (int i=0;i<CONST::h;i++)
         {
             for (int j=0;j<CONST::w;j++)
             {
-                Ray ray = ProduceRay(leftDown + i * Dz * 0.01 + j * Dy * 0.01);
+                Ray ray = ProduceRay(leftDown + i * Dz * yscale + j * Dy * xscale);
                 ray.rayType = 1;//视线光线
 
-                //rtphoto(CONST::h - 1 - i, CONST::w - 1 - j) =
                 if (applyDepth)
                 {
                     for (int k=0;k < sample ;k ++)
@@ -42,8 +37,6 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
                 }
                 else
                     scene.RayTracing(ray, 1, 0, i, j);
-
-                //photo(CONST::h - 1 - i, CONST::w - 1 - j) += color;
             }
             std::cout << "finished: "<<i<<std::endl;
         }
@@ -59,12 +52,7 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
         int hitsize = scene.hits.size();
         for (int i=0;i < hitsize;i++)
         {
-            tmp(scene.hits[i].px, scene.hits[i].py) = tmp(scene.hits[i].px, scene.hits[i].py) + scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 1000000;
-            /*photo(scene.hits[i].px, scene.hits[i].py)[0] = min(photo(scene.hits[i].px, scene.hits[i].py)[0] + tmp[0], 255);
-            photo(scene.hits[i].px, scene.hits[i].py)[1] = min(photo(scene.hits[i].px, scene.hits[i].py)[1] + tmp[1], 255);
-            photo(scene.hits[i].px, scene.hits[i].py)[2] = min(photo(scene.hits[i].px, scene.hits[i].py)[2] + tmp[2], 255);*/
-            //if (tmp[0] != 0)
-                //std::cout << (int)photo(CONST::h - 1 - scene.hits[i].px, CONST::w - 1 - scene.hits[i].py)[0] << std::endl;
+            tmp(scene.hits[i].px, scene.hits[i].py) = tmp(scene.hits[i].px, scene.hits[i].py) + scene.hits[i].RI * (cv::Vec3d)(scene.hits[i].color)/CONST::pi/(scene.hits[i].radius * scene.hits[i].radius)/scene.Ntotal * 3000000;//10000000;//2000000
         }
 
         photo = min(tmp/sample, 255);
@@ -74,16 +62,10 @@ cv::Mat Camera::CreatePhoto(Scene& scene)
 
 
     }
-
-
-
-    //std::cout << "visual point"<<scene.hits.size() << std::endl;
-
-
     return photo;
 }
 
-cv::Mat Camera::CreatePhotoPT(Scene &scene)
+/*cv::Mat Camera::CreatePhotoPT(Scene &scene)
 {
     cv::Mat_<cv::Vec3b> photo(CONST::h, CONST::w, cv::Vec3b(0, 0, 0));
     cv::Point3f photoCenter = position + fD * direction;
@@ -111,7 +93,7 @@ cv::Mat Camera::CreatePhotoPT(Scene &scene)
 
 
     return photo;
-}
+}*/
 
 Ray Camera::ProduceRay(cv::Point3d p)
 {
@@ -148,15 +130,6 @@ Ray Camera::ProduceRay(cv::Point3d p)
         return ray;
 
     }
-
-
 }
 
-double Camera::getPixelLength(const cv::Vec3d &P)
-{
-    return 0.2;
-
-    double dis = cv::norm(P - (cv::Vec3d)position);
-    return dis * sqrt(sqr(CONST::lens_h*0.01) + sqr(CONST::lens_w*0.01));
-}
 

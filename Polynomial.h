@@ -8,7 +8,7 @@
 
 #include <vector>
 #include <complex>
-#include "matlab/main.h"
+
 class Polynomial {
     static double sum_k;
     static int ks, max_k;

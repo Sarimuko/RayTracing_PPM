@@ -11,10 +11,6 @@ CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../Polynomial.h
 CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../Ray.h
 CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../Texture.h
 CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../const.h
-CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../matlab/main.h
-CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../matlab/rt_nonfinite.h
-CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../matlab/rtwtypes.h
-CMakeFiles/RayTracing.dir/Bezier.cpp.o: ../matlab/solve_bezier_types.h
 CMakeFiles/RayTracing.dir/Bezier.cpp.o: /usr/local/include/opencv/cxcore.h
 CMakeFiles/RayTracing.dir/Bezier.cpp.o: /usr/local/include/opencv2/calib3d.hpp
 CMakeFiles/RayTracing.dir/Bezier.cpp.o: /usr/local/include/opencv2/calib3d/calib3d_c.h
@@ -835,10 +831,6 @@ CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../Hit.h
 CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../Polynomial.cpp
 CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../Polynomial.h
 CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../const.h
-CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../matlab/main.h
-CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../matlab/rt_nonfinite.h
-CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../matlab/rtwtypes.h
-CMakeFiles/RayTracing.dir/Polynomial.cpp.o: ../matlab/solve_bezier_types.h
 CMakeFiles/RayTracing.dir/Polynomial.cpp.o: /usr/local/include/opencv/cxcore.h
 CMakeFiles/RayTracing.dir/Polynomial.cpp.o: /usr/local/include/opencv2/calib3d.hpp
 CMakeFiles/RayTracing.dir/Polynomial.cpp.o: /usr/local/include/opencv2/calib3d/calib3d_c.h
@@ -1394,10 +1386,6 @@ CMakeFiles/RayTracing.dir/main.cpp.o: ../Scene.h
 CMakeFiles/RayTracing.dir/main.cpp.o: ../Texture.h
 CMakeFiles/RayTracing.dir/main.cpp.o: ../const.h
 CMakeFiles/RayTracing.dir/main.cpp.o: ../main.cpp
-CMakeFiles/RayTracing.dir/main.cpp.o: ../matlab/main.h
-CMakeFiles/RayTracing.dir/main.cpp.o: ../matlab/rt_nonfinite.h
-CMakeFiles/RayTracing.dir/main.cpp.o: ../matlab/rtwtypes.h
-CMakeFiles/RayTracing.dir/main.cpp.o: ../matlab/solve_bezier_types.h
 CMakeFiles/RayTracing.dir/main.cpp.o: /usr/local/include/opencv/cxcore.h
 CMakeFiles/RayTracing.dir/main.cpp.o: /usr/local/include/opencv2/calib3d.hpp
 CMakeFiles/RayTracing.dir/main.cpp.o: /usr/local/include/opencv2/calib3d/calib3d_c.h

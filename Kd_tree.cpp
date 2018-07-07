@@ -103,3 +103,4 @@ std::vector<Hit> Kd_tree::findRange(Hit target, double range)
 {
     return findRange(root, target, range);
 }
+
