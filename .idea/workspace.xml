@@ -11,78 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af37e5de-35f2-4abe-ae94-4ecb3d02641c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Ray.cpp-c8b7fa34.o.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/texture/vase.ai" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/texture/vase.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bezier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Bezier.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bezier.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bezier.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BoundingBox.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/BoundingBox.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BoundingBox.h" beforeDir="false" afterPath="$PROJECT_DIR$/BoundingBox.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Camera.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Camera.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Camera.h" beforeDir="false" afterPath="$PROJECT_DIR$/Camera.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Functions.h" beforeDir="false" afterPath="$PROJECT_DIR$/Functions.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hit.h" beforeDir="false" afterPath="$PROJECT_DIR$/Hit.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kd_tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Kd_tree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Object.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Object.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Object.h" beforeDir="false" afterPath="$PROJECT_DIR$/Object.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Polynomial.h" beforeDir="false" afterPath="$PROJECT_DIR$/Polynomial.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scene.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Scene.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Texture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Texture.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/Texture.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Bezier.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Bezier.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/BoundingBox.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/BoundingBox.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Camera.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Camera.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Kd_tree.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Kd_tree.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Light.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Light.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Object.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Object.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Polynomial.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Polynomial.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Scene.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Scene.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Texture.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/Texture.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/RayTracing.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/RayTracing" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/RayTracing" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/RayTracing.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/RayTracing.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/const.h" beforeDir="false" afterPath="$PROJECT_DIR$/const.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/libsolve_bezier.dylib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/main.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/main.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/recip.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/roots.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/rtGetInf.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/rtGetNaN.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/rt_nonfinite.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/rtwtypes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier.dylib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier_emxAPI.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier_emxutil.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier_initialize.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier_rtwutil.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier_terminate.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/solve_bezier_types.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/sqrt.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xdlapy3.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xgehrd.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xnrm2.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xscal.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xzgeev.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xzhgeqz.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xzhseqr.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matlab/xzlartg.h" beforeDir="false" />
-    </list>
+    <list default="true" id="af37e5de-35f2-4abe-ae94-4ecb3d02641c" name="Default" comment="" />
     <ignored path="RayTracing.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -102,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Camera.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Camera.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Camera.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1965">
-              <caret line="131" column="5" selection-start-line="131" selection-start-column="5" selection-end-line="131" selection-end-column="5" />
+            <state relative-caret-position="-905">
+              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
               <folding>
                 <element signature="e#45#64#0" expanded="true" />
               </folding>
@@ -114,26 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoundingBox.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BoundingBox.h">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-              <folding>
-                <element signature="e#136#165#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoundingBox.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BoundingBox.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
-              <folding>
-                <element signature="e#45#69#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-33">
+              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -141,8 +55,26 @@
       <file leaf-file-name="Kd_tree.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Kd_tree.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1590">
+            <state relative-caret-position="114">
               <caret line="106" selection-start-line="106" selection-end-line="106" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Kd_tree.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Kd_tree.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="431">
+              <caret line="49" column="2" selection-start-line="49" selection-start-column="2" selection-end-line="49" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="const.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/const.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -150,26 +82,38 @@
       <file leaf-file-name="Hit.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Hit.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+            <state relative-caret-position="501">
+              <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+              <folding>
+                <element signature="e#96#125#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Functions.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Functions.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Functions.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1294">
+            <state relative-caret-position="4">
               <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bezier.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Bezier.h">
+      <file leaf-file-name="Scene.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Scene.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+            <state relative-caret-position="-2122">
+              <caret line="116" selection-start-line="116" selection-end-line="116" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Scene.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Scene.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="407">
+              <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -177,29 +121,11 @@
       <file leaf-file-name="Bezier.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Bezier.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="2610">
               <caret line="174" column="27" selection-start-line="174" selection-start-column="27" selection-end-line="174" selection-end-column="27" />
               <folding>
                 <element signature="e#45#64#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Texture.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Texture.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Texture.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Texture.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
             </state>
           </provider>
         </entry>
@@ -383,7 +309,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="267155000" />
+    <option name="totallyTimeSpent" value="267163000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -396,10 +322,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="726" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.329653" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.26868045" />
       <window_info anchor="bottom" id="CMake" order="7" weight="0.3290938" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.329653" />
@@ -410,12 +336,22 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.42766297" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.329653" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.329653" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3290938" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.42766297" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.26868045" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329653" />
+      <window_info anchor="bottom" id="CMake" order="7" weight="0.3290938" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -591,8 +527,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Kd_tree.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="431">
+          <caret line="49" column="2" selection-start-line="49" selection-start-column="2" selection-end-line="49" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -615,22 +551,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scene.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
+        <state relative-caret-position="407">
           <caret line="42" column="6" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
+        <state relative-caret-position="-33">
           <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scene.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2955">
-          <caret line="197" column="32" selection-start-line="197" selection-start-column="32" selection-end-line="197" selection-end-column="32" />
+        <state relative-caret-position="-2122">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
         </state>
       </provider>
     </entry>
@@ -650,8 +586,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/const.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        <state relative-caret-position="265">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -678,8 +614,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Camera.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1965">
-          <caret line="131" column="5" selection-start-line="131" selection-start-column="5" selection-end-line="131" selection-end-column="5" />
+        <state relative-caret-position="-905">
+          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
           <folding>
             <element signature="e#45#64#0" expanded="true" />
           </folding>
@@ -722,15 +658,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Kd_tree.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1590">
+        <state relative-caret-position="114">
           <caret line="106" selection-start-line="106" selection-end-line="106" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Hit.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+        <state relative-caret-position="501">
+          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+          <folding>
+            <element signature="e#96#125#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -743,7 +682,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bezier.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="2610">
           <caret line="174" column="27" selection-start-line="174" selection-start-column="27" selection-end-line="174" selection-end-column="27" />
           <folding>
             <element signature="e#45#64#0" expanded="true" />
@@ -753,7 +692,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Functions.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1294">
+        <state relative-caret-position="4">
           <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
